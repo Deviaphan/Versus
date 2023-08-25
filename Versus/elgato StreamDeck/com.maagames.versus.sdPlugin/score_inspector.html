@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta
+			name="viewport"
+			content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,minimal-ui,viewport-fit=cover"
+		/>
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<title>com.maagames.versus Property Inspector</title>
+		<link rel="stylesheet" href="sdpi.css" />
+	</head>
+	<body>
+		<div class="sdpi-wrapper">
+			<form id="property-inspector">
+				<div class="sdpi-item">
+					<div data-localize class="sdpi-item-label">Player number</div>
+					<input class="sdpi-item-value" name="playerNumber" type=number value=1 step=1 min=1 max=100 onchange="SendNewData();" />
+				</div>
+				
+				<div class="sdpi-item">
+					<div data-localize class="sdpi-item-label">Increment step</div>
+					<input class="sdpi-item-value" name="incStep" type=number value=1.0 onchange="SendNewData();" />
+				</div>
+				
+				<div class="sdpi-heading">Versus settings</div>
+				
+				<div class="sdpi-wrapper">
+					<form id="property-inspector">
+						<div class="sdpi-item">
+							<div data-localize class="sdpi-item-label">Data port</div>
+							<input class="sdpi-item-value" name="httpPort" type=number value=0 step=1 min=0 max=65535 onchange="SendVersusData();" />
+						</div>
+						
+						<div class="sdpi-item">
+							<div data-localize class="sdpi-item-label">Socket port</div>
+							<input class="sdpi-item-value" name="socketPort" type=number value=0 step=1 min=0 max=65535 onchange="SendVersusData();" />
+						</div>
+					</form>
+				</div>
+			</form>
+		</div>
+		
+
+     <script src="score_inspector.js"></script>
+
+	</body>
+</html>

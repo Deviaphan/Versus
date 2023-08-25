@@ -1,0 +1,185 @@
+﻿.s2_bg
+{
+	position:absolute;
+	top:0px;
+	left:314px;
+	width:1294px;
+	height:121px;
+	background: url("scene_2/bg.png");
+}
+
+.s2_neon
+{
+	position:absolute;
+	top:0px;
+	left:314px;
+	width:1294px;
+	height:121px;
+	background: url("scene_2/neon.png");
+}
+
+
+.s2_name
+{
+	position:absolute;
+	text-align: center;
+	font-size: 40px;
+	line-height: 50px;
+	width: 385px;
+	height: 50px;
+	color: #fff;
+	top:5px;
+}
+.s2_p1name
+{
+	left:392px;
+}
+
+.s2_p2name
+{
+	left:1144px;
+}
+
+
+.s2_tname
+{
+	position:absolute;
+	top:65px;
+	text-align: center;
+	font-size: 25px;
+	line-height: 35px;
+	width: 290px;
+	height: 35px;
+	color: #fff;
+}
+.s2_t1name
+{
+	left:422px;
+}
+
+.s2_t2name
+{
+	left:1207px;
+}
+
+
+.s2_logo
+{
+	position:absolute;
+	width:59px;
+	height:59px;
+	padding: 0;
+	margin: 0;
+	
+	background: url("") no-repeat;
+	background-size: 59px 59px;
+	background-position: center;
+	
+	mask-size: 59px 59px;	
+	-webkit-mask-size: 59px 59px;
+}
+
+.s2_p1logo
+{
+	top:0px;
+	left:335px;
+	
+	mask: url("scene_2/p1mask.png");	
+	-webkit-mask: url("scene_2/p1mask.png");	
+}
+
+.s2_p2logo
+{
+	top:0px;
+	left:1527px;
+	
+	mask: url("scene_2/p2mask.png");	
+	-webkit-mask: url("scene_2/p2mask.png");	
+}
+
+.s2_t1logo
+{
+	left:777px;	
+	mask: url("scene_2/p2mask.png");	
+	-webkit-mask: url("scene_2/p2mask.png");
+}
+
+.s2_t2logo
+{
+	left:1085px;	
+	mask: url("scene_2/p1mask.png");	
+	-webkit-mask: url("scene_2/p1mask.png");	
+}
+
+.s2_score
+{
+	position:absolute;
+	text-align: center;
+	font-size: 60px;
+	font-weight: 800;
+	line-height: 60px;
+	width: 115px;
+	height: 60px;
+	color: #fff;
+	top:10px;
+}
+.s2_p1score
+{
+	left:845px;
+}
+
+.s2_p2score
+{
+	left:960px;
+}
+
+
+.s2_clock_bg
+{
+	position:absolute;
+	top:86px;
+	left:854px;
+	width:212px;
+	height:56px;
+	background: url("scene_2/clock_bg.png");
+}
+
+.s2_clock_neon
+{
+	position:absolute;
+	top:86px;
+	left:854px;
+	width:212px;
+	height:56px;
+	background: url("scene_2/clock_neon.png");
+}
+
+.s2_time_data
+{
+	position:absolute;
+	top:86px;
+	left:886px;
+	text-align: center;
+	font-size: 32px;
+	line-height: 32px;
+	width: 150px;
+	height: 32px;
+	color: #fff;
+	display:inline-block;
+}
+
+.hh
+{
+	display:inline-block;
+	width:40px;
+}
+.mm
+{
+	display:inline-block;
+	width:40px;
+}
+.ss
+{
+	display:inline-block;
+	width:40px;
+}

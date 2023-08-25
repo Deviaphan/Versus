@@ -1,0 +1,193 @@
+﻿body
+{
+	padding: 0;
+	margin: 0;
+	overflow: hidden;	
+	
+	font-family: 'Comfortaa', cursive;
+	font-family: 'Righteous', cursive;
+}
+
+#Scene_1
+{
+	display : none;
+	background: url("bg.png");
+	top:0px;
+	left:0px;
+	width:1920px;
+	height:1080px;
+}
+
+#Scene_2
+{
+	display : none;
+	background: url("bg_t1.png");
+	top:0px;
+	left:0px;
+	width:1920px;
+	height:1080px;
+}
+#Scene_3
+{
+	display : none;
+	background: url("bg_t2.png");
+	top:0px;
+	left:0px;
+	width:1920px;
+	height:1080px;
+}
+
+
+.title
+{
+	position:absolute;
+	top:928px;
+	left:760px;
+	width:400px;
+	height:144px;
+	line-height: 70px;
+	text-align: center;
+	font-size: 48px;
+	color: #d33;
+	text-shadow: 2px 2px 2px black; 
+}
+
+.name
+{
+	width: 510px;
+	height: 64px;
+	
+	text-align: center;
+	font-size: 50px;
+	line-height: 64px;
+	
+	color: #eee;	
+	
+	text-shadow: 4px 4px 2px black; 
+}
+
+.p1name
+{
+	position:absolute;
+	float:left;
+	top:928px;
+	left:150px;
+}
+.p2name
+{
+	position:absolute;
+	float:left;
+	top:1008px;
+	left:150px;
+}
+.p3name
+{
+	position:absolute;
+	float:left;
+	top:928px;
+	left:1260px;
+}
+.p4name
+{
+	position:absolute;
+	float:left;
+	top:1008px;
+	left:1260px;
+}
+
+.score
+{
+	width: 100px;
+	height: 64px;
+	text-align: center;
+	font-size: 64px;
+	line-height: 64px;
+	color: #333;
+	
+	text-shadow: 3px 3px 2px white, -3px -3px 2px white;
+}
+
+.p1score
+{
+	position:absolute;
+	float:left;
+	top:928px;
+	left:660px;
+}
+.p2score
+{
+	position:absolute;
+	float:left;
+	top:1008px;
+	left:660px;
+}
+.p3score
+{
+	position:absolute;
+	float:left;
+	top:928px;
+	left:1160px;
+}
+.p4score
+{
+	position:absolute;
+	float:left;
+	top:1008px;
+	left:1160px;
+}
+
+.type
+{
+	width: 142px;
+	height: 64px;
+	text-align: center;
+	font-size: 28px;
+	line-height: 64px;
+	color: #daf6e0;
+	text-shadow: 2px 2px 2px black; 
+
+}
+.stage
+{
+	width: 142px;
+	height: 64px;
+	text-align: center;
+	font-size: 28px;
+	line-height: 64px;
+	color: #f0f0d0;
+	text-shadow: 2px 2px 2px black; 
+}
+
+/*table 1. RACE*/
+.p5name
+{
+	position:absolute;
+	float:left;
+	top:928px;
+	left:8px;
+}
+/*table 1. STAGE*/
+.p6name
+{
+	position:absolute;
+	float:left;
+	top:1008px;
+	left:10px;
+}
+
+/*table 2. RACE*/
+.p7name
+{
+	position:absolute;
+	float:left;
+	top:928px;
+	left:1770px;
+}
+/*table 2. STAGE*/
+.p8name
+{
+	position:absolute;
+	float:left;
+	top:1008px;
+	left:1770px;
+}

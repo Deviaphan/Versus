@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap" rel="stylesheet"> 
+
+	<link rel="stylesheet" href="style.css" />
+	<link rel="stylesheet" href="scene_1.css" />
+	<link rel="stylesheet" href="scene_2.css" />
+	
+	<script type="text/javascript" src="updateDataAdvanced.js"></script>
+	<script type="text/javascript" src="timer.js"></script>
+	<script type="text/javascript" src="change_style.js"></script>
+	<script type="text/javascript" src="select_scene.js"></script>
+</head>
+
+<body onload="OnSelectScene(); OnChangeTimer('0'); UpdateData();">
+
+<div id="Scene_1" >
+
+<div class="s1_bg_left"></div>
+<div class="s1_bg_right"></div>
+
+<div class="p1logo s1_logo s1_p1logo"></div>
+<div class="p2logo s1_logo s1_p2logo"></div>
+
+<div class="p1name s1_name s1_p1name">P1</div>
+<div class="p2name s1_name s1_p2name">P2</div>
+
+<div class="s1_neon_left"></div>
+<div class="s1_neon_right"></div>
+
+<div class="t1logo s1_flag s1_t1logo"></div>
+<div class="t2logo s1_flag s1_t2logo"></div>
+
+
+<div class="s1_vs"></div>
+
+</div>
+
+<div id="Scene_2" >
+
+<div id="Clock_Face">
+<div class="s2_clock_bg"></div>
+
+<div class="s2_time_data"><span class="hh"></span>:<span class="mm"></span>:<span class="ss"></span> </div>
+
+<div class="s2_clock_neon"></div>
+
+</div>
+
+<div class="s2_bg"></div>
+
+<div class="p1logo s2_logo s2_p1logo"></div>
+<div class="p2logo s2_logo s2_p2logo"></div>
+
+<div class="t1logo s2_logo s2_t1logo"></div>
+<div class="t2logo s2_logo s2_t2logo"></div>
+
+<div class="p1name s2_name s2_p1name"></div>
+<div class="p2name s2_name s2_p2name"></div>
+
+<div class="t1name s2_tname s2_t1name"></div>
+<div class="t2name s2_tname s2_t2name"></div>
+
+<div class="p1score s2_score s2_p1score"></div>
+<div class="p2score s2_score s2_p2score"></div>
+
+
+
+<div class="s2_neon"></div>
+
+
+</div>
+
+</body>
+</html>

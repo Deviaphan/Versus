@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+
+  <Type Name="QString">
+    <DisplayString>{d.ptr,[d.size]su}</DisplayString>
+  </Type>
+
+  <Type Name="PlayerItem">
+    <DisplayString>{title}, {logo}</DisplayString>
+  </Type>
+
+
+
+</AutoVisualizer>

@@ -1,0 +1,286 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Header Files\Hotkeys">
+      <UniqueIdentifier>{ac4af151-5668-4a25-94eb-b577414aaaaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Hotkeys">
+      <UniqueIdentifier>{b3270034-dbe8-4da8-965d-84da43457440}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\CheckNew">
+      <UniqueIdentifier>{dcfaac2b-c31f-43a8-a066-ae2f5766a8c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CheckNew">
+      <UniqueIdentifier>{677bac4c-81f3-4bcc-ab74-ff8e3e33100d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Server">
+      <UniqueIdentifier>{061079b5-c241-419d-a56d-0a7bb286bb08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Themes">
+      <UniqueIdentifier>{6155a7fb-47ca-4054-ad00-1888018d01f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Server">
+      <UniqueIdentifier>{b63f4f62-adaa-4667-9f20-d1969bd65c6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Themes">
+      <UniqueIdentifier>{0a1d5ec0-97ce-4099-8f1c-9feca2256bf5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="Versus.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <ClCompile Include="Versus.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <QtMoc Include="PlayerItemWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Hotkey\Dlg_EditHotkey.h">
+      <Filter>Header Files\Hotkeys</Filter>
+    </QtMoc>
+    <QtMoc Include="Hotkey\qxtglobalshortcut.h">
+      <Filter>Header Files\Hotkeys</Filter>
+    </QtMoc>
+    <QtMoc Include="CheckNew\Dlg_CheckUpdate.h">
+      <Filter>Header Files\CheckNew</Filter>
+    </QtMoc>
+    <QtMoc Include="Themes\Dlg_SelectLogo.h">
+      <Filter>Header Files\Themes</Filter>
+    </QtMoc>
+    <QtMoc Include="Themes\Dlg_SelectTheme.h">
+      <Filter>Header Files\Themes</Filter>
+    </QtMoc>
+    <QtMoc Include="Server\Downloader.h">
+      <Filter>Header Files\Server</Filter>
+    </QtMoc>
+    <QtMoc Include="Dlg_EditPlayers.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Dlg_Settings.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="PlayerListItem.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="TeamListItem.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Dlg_EditTeams.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="PlayerGroupItem.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Dlg_SetPlayerGroup.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Dlg_EditList.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Hotkey\HotkeyItemWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="MoveListWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerItemWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Hotkey\Dlg_EditHotkey.cpp">
+      <Filter>Source Files\Hotkeys</Filter>
+    </ClCompile>
+    <ClCompile Include="Hotkey\qxtglobalshortcut.cpp">
+      <Filter>Source Files\Hotkeys</Filter>
+    </ClCompile>
+    <ClCompile Include="Hotkey\qxtglobalshortcut_win.cpp">
+      <Filter>Source Files\Hotkeys</Filter>
+    </ClCompile>
+    <ClCompile Include="CheckNew\Dlg_CheckUpdate.cpp">
+      <Filter>Source Files\CheckNew</Filter>
+    </ClCompile>
+    <ClCompile Include="Themes\Dlg_SelectLogo.cpp">
+      <Filter>Source Files\Themes</Filter>
+    </ClCompile>
+    <ClCompile Include="Themes\Dlg_SelectTheme.cpp">
+      <Filter>Source Files\Themes</Filter>
+    </ClCompile>
+    <ClCompile Include="Themes\ThemeInfo.cpp">
+      <Filter>Source Files\Themes</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\Downloader.cpp">
+      <Filter>Source Files\Server</Filter>
+    </ClCompile>
+    <ClCompile Include="CalcWindowPosition.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Dlg_EditPlayers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Dlg_Settings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SharedTools.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Themes\LogoManager.cpp">
+      <Filter>Source Files\Themes</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerListItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TeamListItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Dlg_EditTeams.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerGroupItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Dlg_SetPlayerGroup.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Dlg_EditList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Hotkey\HotkeyItemWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveListWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Hotkey\qxtglobalshortcut_p.h">
+      <Filter>Header Files\Hotkeys</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckNew\Version.h">
+      <Filter>Header Files\CheckNew</Filter>
+    </ClInclude>
+    <ClInclude Include="Themes\ThemeInfo.h">
+      <Filter>Header Files\Themes</Filter>
+    </ClInclude>
+    <ClInclude Include="CalcWindowPosition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SharedTools.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WaitCursor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerItemData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Themes\LogoManager.h">
+      <Filter>Header Files\Themes</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Versus.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\vs.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="UI\PlayerItemWidget.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="UI\Versus.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="UI\Dlg_EditHotkey.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="UI\Dlg_CheckUpdate.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="UI\Dlg_EditPlayers.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="UI\Dlg_SelectLogo.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="UI\Dlg_SelectTheme.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="UI\Dlg_Settings.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="UI\Dlg_EditTeams.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="UI\PlayerListItem.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="UI\TeamListItem.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="UI\PlayerGroupItem.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="UI\Dlg_SetPlayerGroup.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="UI\Dlg_EditList.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="UI\HotkeyItemWidget.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="RC\Versus.qrc">
+      <Filter>Resource Files</Filter>
+    </QtRcc>
+  </ItemGroup>
+</Project>

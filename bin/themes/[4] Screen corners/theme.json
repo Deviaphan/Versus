@@ -1,0 +1,20 @@
+﻿
+{
+	"author": "maaGames",
+	"homepage": "vk.com/maagames",
+	"title": "[4] Screen Corners",
+	"game": "Any game",
+	"size": "1280 x 720 px",
+	"align": "Whole screen",
+	"numPlayers": "4",
+	"styles": [
+		{
+			"colors": [
+				"#ff0000",
+				"#00ff00",
+				"#0000ff",
+				"#ffff00"
+			]
+		}
+	]
+}

@@ -1,0 +1,64 @@
+﻿body
+{
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+}
+
+.ClockFace
+{
+	display: table;
+	overflow: hidden;
+	background-image:url("clock_bg.png");
+	width: 350px;
+	height: 97px;
+}
+
+.Digit
+{
+	overflow: hidden;
+	display: table-cell;
+	background-image:url("digits.png");
+	background-position: 0px 0px;
+	width: 53px;
+	height: 77px;
+}
+
+#hh_2
+{
+	position:absolute;
+	top:10px;
+	left:10px;
+}
+#hh_1
+{
+	position:absolute;
+	top:10px;
+	left:63px;
+}
+
+#mm_2
+{
+	position:absolute;
+	top:10px;
+	left:122px;
+}
+#mm_1
+{
+	position:absolute;
+	top:10px;
+	left:175px;
+}
+
+#ss_2
+{
+	position:absolute;
+	top:10px;
+	left:234px;
+}
+#ss_1
+{
+	position:absolute;
+	top:10px;
+	left:287px;
+}

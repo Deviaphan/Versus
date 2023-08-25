@@ -1,0 +1,157 @@
+﻿body
+{
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+}
+
+.red
+{
+	position:absolute;
+	top:0px;
+	left:0px;
+}
+
+.green
+{
+	position:absolute;
+	top:0px;
+	left:930px;
+}
+
+.blue
+{
+	position:absolute;
+	top:603px;
+	left:930px;
+}
+
+.yellow
+{
+	position:absolute;
+	top:595px;
+	left:0px;
+}
+
+
+
+#p1score
+{
+	position:absolute;
+	font-weight: 600;
+	top:10px;
+	left:10px;
+	width: 50px;
+	height:50px;
+	line-height:50px;
+	text-align: center;
+	font-size: 50px;
+	color: #ffffff;
+	text-shadow: 2px 2px 1px black, -1px -1px 3px black;
+}
+#p1name
+{
+	overflow: hidden;
+	position:absolute;
+	top:0px;
+	left:70px;
+	width: 230px;
+	height:40px;
+	line-height:40px;
+	text-align: center;
+	font-size: 36px;
+	font-weight: 600;
+	color: #ffffff;
+	text-shadow: 2px 2px 1px black, -1px -1px 3px black; 
+}
+
+#p2score
+{
+	position:absolute;
+	font-weight: 600;
+	top:10px;
+	left:1220px;
+	width: 50px;
+	height:50px;
+	line-height:50px;
+	text-align: center;
+	font-size: 50px;
+	color: #ffffff;
+	text-shadow: 2px 2px 1px black, -1px -1px 3px black; 
+}
+#p2name
+{
+	overflow: hidden;
+	position:absolute;
+	top:0px;
+	left:990px;
+	width: 230px;
+	height:40px;
+	line-height:40px;
+	text-align: center;
+	font-size: 36px;
+	font-weight: 600;
+	color: #ffffff;
+	text-shadow: 2px 2px 1px black, -1px -1px 3px black;
+}
+
+#p3score
+{
+	position:absolute;
+	font-weight: 600;
+	top:660px;
+	left:1220px;
+	width: 50px;
+	height:50px;
+	line-height:50px;
+	text-align: center;
+	font-size: 50px;
+	color: #ffffff;
+	text-shadow: 2px 2px 1px black, -1px -1px 3px black; 
+}
+#p3name
+{
+	overflow: hidden;
+	position:absolute;
+	top:680px;
+	left:990px;
+	width: 230px;
+	height:40px;
+	line-height:40px;
+	text-align: center;
+	font-size: 36px;
+	font-weight: 600;
+	color: #ffffff;
+	text-shadow: 2px 2px 1px black, -1px -1px 3px black;
+}
+
+#p4score
+{
+	position:absolute;
+	font-weight: 600;
+	top:660px;
+	left:10px;
+	width: 50px;
+	height:50px;
+	line-height:50px;
+	text-align: center;
+	font-size: 50px;
+	color: #ffffff;
+	text-shadow: 2px 2px 1px black, -1px -1px 3px black;
+}
+#p4name
+{
+	overflow: hidden;
+	position:absolute;
+	top:680px;
+	left:70px;
+	width: 230px;
+	height:40px;
+	line-height:40px;
+	text-align: center;
+	font-size: 36px;
+	font-weight: 600;
+	color: #ffffff;
+	text-shadow: 2px 2px 1px black, -1px -1px 3px black; 
+}
+

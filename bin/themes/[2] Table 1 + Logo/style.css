@@ -1,0 +1,58 @@
+﻿body
+{
+	padding: 0;
+	margin: 0;
+	overflow: hidden;	
+	font-family: 'Roboto', sans-serif;
+}
+
+.panel
+{
+	padding: 0;
+	margin: 0;
+
+	width: 560px;
+	height: 70px;
+	background: url("panel.png") no-repeat;
+	overflow: visible;
+}
+
+.name
+{
+	float:left;
+	padding-right: 20px;
+	text-align: right;
+	font-size: 36px;
+	line-height: 59px;
+	width: 340px;
+	height: 59px;
+	color: #333b;
+}
+.score
+{
+	float:left;
+	
+	color: #fffd;
+	text-align: center;
+	font-size: 48px;
+	line-height: 59px;
+	width: 135px;
+}
+
+.logo
+{
+	float:left;
+	width:82px;
+	height:64px;
+	padding: 0;
+	margin: -2px -16px;
+	
+	background: url("") no-repeat;
+	background-size: 64px 64px;
+	background-position: center;
+	
+	mask: url("mask.png");	
+	mask-size: 82px 64px;	
+	-webkit-mask: url("mask.png");	
+	-webkit-mask-size: 82px 64px;
+}

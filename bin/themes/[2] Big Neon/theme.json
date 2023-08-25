@@ -1,0 +1,26 @@
+﻿
+{
+	"author": "maaGames",
+	"homepage": "vk.com/maagames",
+	"title": "[2] Big Neon - Multi scenes",
+	"size": "1920 x 1080 px",
+	"align": "Full screen",
+	"numPlayers":"2",
+	"styles": [
+		{
+			"name": "Show clock",
+			"colors": [
+				"#f700b1",
+				"#005efb"
+			]
+	
+		},
+		{
+			"name": "Hide clock",
+			"colors": [
+				"#f700b1",
+				"#005efb"
+			]	
+		}
+	]
+}

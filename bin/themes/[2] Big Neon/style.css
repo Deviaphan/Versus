@@ -1,0 +1,22 @@
+﻿body
+{
+	padding: 0;
+	margin: 0;
+	overflow: hidden;	
+	font-family: 'Comfortaa', cursive;
+}
+
+#Scene_1
+{
+	display : none;
+}
+
+#Scene_2
+{
+	display : none;
+}
+
+#Clock_Face
+{
+	visibility : visible;
+}

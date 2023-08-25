@@ -1,0 +1,81 @@
+{
+    "Actions": [{
+            "Icon": "actionIconScore",
+            "Name": "Show Score",
+            "States": [{
+				    "Image": "actionDefaultImage",
+                    "TitleAlignment": "middle",
+                    "FontSize": "24"
+                }
+            ],
+            "SupportedInMultiActions": false,
+            "Tooltip": "Show scores for selected Player",
+            "UUID": "com.maagames.versus.showscore",
+			"PropertyInspectorPath": "score_inspector.html"
+        },
+		{
+            "Icon": "actionIconPhoto",
+            "Name": "Show Player Photo",
+            "States": [{
+				    "Image": "actionDefaultPhoto",
+                    "TitleAlignment": "bottom",
+                    "FontSize": "14"
+                }
+            ],
+            "SupportedInMultiActions": false,
+            "Tooltip": "Show Player photo",
+            "UUID": "com.maagames.versus.photo",
+			"PropertyInspectorPath": "photo_inspector.html"
+        },
+		{
+            "Icon": "actionIconFlag",
+            "Name": "Show Team flag",
+            "States": [{
+				    "Image": "actionDefaultFlag",
+                    "TitleAlignment": "bottom",
+                    "FontSize": "14"
+                }
+            ],
+            "SupportedInMultiActions": false,
+            "Tooltip": "Show Team flag",
+            "UUID": "com.maagames.versus.flag",
+			"PropertyInspectorPath": "flag_inspector.html"
+        },
+		{
+            "Icon": "actionIconTime",
+            "Name": "Show timer",
+            "States": [{
+				    "Image": "actionTimeImage",
+                    "TitleAlignment": "middle",
+                    "FontSize": "18"
+                }
+            ],
+            "SupportedInMultiActions": false,
+            "Tooltip": "Show 'Versus' timer",
+            "UUID": "com.maagames.versus.timer"
+        }
+    ],
+    "SDKVersion": 2,
+    "Author": "maaGames",
+    "CodePath": "main.html",
+    "Category": "Versus",
+    "CategoryIcon": "versus-logo",
+    "Description": "Show scores from 'Versus rEvolution' scoreboard",
+    "Name": "Versus",
+    "Icon": "pluginIcon",
+    "URL": "https://obsproject.com/forum/resources/versus-%E2%93%87evolution-scoreboard.1339/",
+    "Version": "2.0",
+    "OS": [{
+            "Platform": "windows",
+            "MinimumVersion": "10"
+        }
+    ],
+    "Software": {
+        "MinimumVersion": "5.0"
+    },
+    "ApplicationsToMonitor": {
+        "windows": [
+            "Versus.exe"
+        ]
+    }
+}

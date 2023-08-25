@@ -1,0 +1,265 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{BC7C1292-7105-4329-A9D1-244891861C98}</ProjectGuid>
+    <Keyword>QtVS_v304</Keyword>
+    <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">10.0</WindowsTargetPlatformVersion>
+    <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>NotSet</CharacterSet>
+    <EnableASAN>true</EnableASAN>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>NotSet</CharacterSet>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
+    <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
+  </Target>
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt_defaults.props')">
+    <Import Project="$(QtMsBuild)\qt_defaults.props" />
+  </ImportGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <IntDir>$(SolutionDir)obj\$(Configuration)\$(ProjectName)\</IntDir>
+    <OutDir>$(SolutionDir)bin\</OutDir>
+    <IncludePath>$(SolutionDir);$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <TargetName>$(ProjectName)_d</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutDir>$(SolutionDir)bin\</OutDir>
+    <IncludePath>$(SolutionDir);$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath);</LibraryPath>
+    <LinkIncremental>false</LinkIncremental>
+    <IntDir>$(SolutionDir)obj\$(Configuration)\$(ProjectName)\V\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <SDLCheck>true</SDLCheck>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <StringPooling>true</StringPooling>
+      <ControlFlowGuard>false</ControlFlowGuard>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <WarningLevel>Level4</WarningLevel>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <QtMoc>
+      <MultiProcessorCompilation>
+      </MultiProcessorCompilation>
+      <WarningLevel>
+      </WarningLevel>
+      <SDLCheck>
+      </SDLCheck>
+      <OverrideClCompile>false</OverrideClCompile>
+    </QtMoc>
+    <Link>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+    </Link>
+    <Link>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <FixedBaseAddress>false</FixedBaseAddress>
+      <AdditionalDependencies>$(Qt_LIBS_);%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>
+      </DelayLoadDLLs>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <SDLCheck>true</SDLCheck>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ControlFlowGuard>Guard</ControlFlowGuard>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <DelayLoadDLLs>
+      </DelayLoadDLLs>
+    </Link>
+  </ItemDefinitionGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
+    <QtInstall>6.6.0_msvc2019_64</QtInstall>
+    <QtModules>core;gui;network;websockets;widgets;httpserver</QtModules>
+    <QtBuildConfig>debug</QtBuildConfig>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
+    <QtInstall>6.6.0_msvc2019_64</QtInstall>
+    <QtModules>core;gui;network;websockets;widgets;httpserver</QtModules>
+    <QtBuildConfig>release</QtBuildConfig>
+    <QtDeploy>false</QtDeploy>
+  </PropertyGroup>
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt.props')">
+    <Import Project="$(QtMsBuild)\qt.props" />
+  </ImportGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
+    <ClCompile>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <UsePrecompiledHeader>Use</UsePrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <QtMoc>
+      <PrependInclude>stdafx.h;%(PrependInclude)</PrependInclude>
+    </QtMoc>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="Configuration">
+    <ClCompile>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <Optimization>MaxSpeed</Optimization>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <UsePrecompiledHeader>Use</UsePrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+    </Link>
+    <QtMoc>
+      <PrependInclude>stdafx.h;%(PrependInclude)</PrependInclude>
+    </QtMoc>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <QtMoc Include="Dlg_EditTeams.h" />
+    <QtMoc Include="MoveListWidget.h" />
+    <ClInclude Include="PlayerItem.h" />
+    <ClInclude Include="PlayerItemData.h" />
+    <QtMoc Include="PlayerListItem.h" />
+    <ClInclude Include="PlayerManager.h" />
+    <QtMoc Include="TeamListItem.h" />
+    <ClInclude Include="Themes\LogoManager.h" />
+    <QtMoc Include="PlayerGroupItem.h" />
+    <QtMoc Include="Dlg_SetPlayerGroup.h" />
+    <QtMoc Include="Dlg_EditList.h" />
+    <QtMoc Include="Hotkey\HotkeyItemWidget.h" />
+    <ClInclude Include="WaitCursor.h" />
+    <QtMoc Include="Server\Downloader.h" />
+    <ClInclude Include="CalcWindowPosition.h" />
+    <QtMoc Include="Dlg_EditPlayers.h" />
+    <QtMoc Include="Dlg_Settings.h" />
+    <ClInclude Include="SharedTools.h" />
+    <ClInclude Include="Themes\ThemeInfo.h" />
+    <QtMoc Include="Themes\Dlg_SelectTheme.h" />
+    <QtMoc Include="Themes\Dlg_SelectLogo.h" />
+    <QtMoc Include="PlayerItemWidget.h" />
+    <QtMoc Include="Hotkey\Dlg_EditHotkey.h" />
+    <QtMoc Include="Hotkey\qxtglobalshortcut.h" />
+    <QtMoc Include="CheckNew\Dlg_CheckUpdate.h" />
+    <ClInclude Include="CheckNew\Version.h" />
+    <ClInclude Include="Hotkey\qxtglobalshortcut_p.h" />
+    <ClInclude Include="resource.h" />
+    <QtUic Include="UI\Dlg_EditList.ui" />
+    <QtUic Include="UI\Dlg_EditTeams.ui" />
+    <QtUic Include="UI\Dlg_SetPlayerGroup.ui" />
+    <QtUic Include="UI\HotkeyItemWidget.ui" />
+    <QtUic Include="UI\PlayerGroupItem.ui" />
+    <QtUic Include="UI\PlayerListItem.ui" />
+    <QtUic Include="UI\TeamListItem.ui" />
+    <QtUic Include="UI\Dlg_CheckUpdate.ui" />
+    <QtUic Include="UI\Dlg_EditHotkey.ui" />
+    <QtUic Include="UI\Dlg_EditPlayers.ui" />
+    <QtUic Include="UI\Dlg_SelectLogo.ui" />
+    <QtUic Include="UI\Dlg_SelectTheme.ui" />
+    <QtUic Include="UI\Dlg_Settings.ui" />
+    <QtUic Include="UI\PlayerItemWidget.ui" />
+    <QtUic Include="UI\Versus.ui" />
+    <QtMoc Include="Versus.h" />
+    <ClCompile Include="CalcWindowPosition.cpp" />
+    <ClCompile Include="CheckNew\Dlg_CheckUpdate.cpp" />
+    <ClCompile Include="Dlg_EditPlayers.cpp" />
+    <ClCompile Include="Dlg_EditTeams.cpp" />
+    <ClCompile Include="Dlg_Settings.cpp" />
+    <ClCompile Include="Hotkey\Dlg_EditHotkey.cpp" />
+    <ClCompile Include="Hotkey\qxtglobalshortcut.cpp" />
+    <ClCompile Include="Hotkey\qxtglobalshortcut_win.cpp" />
+    <ClCompile Include="MoveListWidget.cpp" />
+    <ClCompile Include="PlayerListItem.cpp" />
+    <ClCompile Include="PlayerManager.cpp" />
+    <ClCompile Include="PlayerItemWidget.cpp" />
+    <ClCompile Include="Server\Downloader.cpp" />
+    <ClCompile Include="SharedTools.cpp" />
+    <ClCompile Include="TeamListItem.cpp" />
+    <ClCompile Include="Themes\Dlg_SelectLogo.cpp" />
+    <ClCompile Include="Themes\Dlg_SelectTheme.cpp" />
+    <ClCompile Include="Themes\LogoManager.cpp" />
+    <ClCompile Include="Themes\ThemeInfo.cpp" />
+    <ClCompile Include="PlayerGroupItem.cpp" />
+    <ClCompile Include="Dlg_SetPlayerGroup.cpp" />
+    <ClCompile Include="Dlg_EditList.cpp" />
+    <ClCompile Include="Hotkey\HotkeyItemWidget.cpp" />
+    <ClCompile Include="Versus.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClInclude Include="stdafx.h" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Versus.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\vs.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="RC\Versus.qrc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
+    <Import Project="$(QtMsBuild)\qt.targets" />
+  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

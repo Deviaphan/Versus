@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PlayerGroupItemClass</class>
+ <widget class="QWidget" name="PlayerGroupItemClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>455</width>
+    <height>58</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>455</width>
+    <height>58</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>455</width>
+    <height>58</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>PlayerGroupItem</string>
+  </property>
+  <widget class="QPushButton" name="pushSelect">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>41</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: transparent;
+border:0px;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnDelete">
+   <property name="geometry">
+    <rect>
+     <x>410</x>
+     <y>10</y>
+     <width>41</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="text">
+    <string>delete</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="groupName">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>10</y>
+     <width>341</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="readOnly">
+    <bool>true</bool>
+   </property>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>pushSelect</tabstop>
+  <tabstop>groupName</tabstop>
+  <tabstop>btnDelete</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>
