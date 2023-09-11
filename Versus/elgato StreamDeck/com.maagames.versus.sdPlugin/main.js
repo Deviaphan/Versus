@@ -11,7 +11,13 @@ const ItemEnum = Object.freeze(
 		PLAYER_SCORE: 0,
 		PLAYER_PHOTO: 1,
 		TEAM_FLAG: 2,
-		TIMER: 3
+		TIMER: 3,
+		TIMER_START: 4,
+		TIMER_PAUSE: 5,
+		TIMER_STOP: 6,
+		PLAYER_SORT_UP: 7,
+		PLAYER_SORT_DOWN: 8,
+		PLAYER_SWAP: 9
 	}
 );
 
@@ -521,6 +527,43 @@ function StreamDeckOnMessage( evt )
 						versusSocket.send(json);
 					}
 				}
+				
+				else if( action === 'com.maagames.versus.starttimer' )
+				{
+					const json = `{ "timerStart": "0" }`;
+					versusSocket.send(json);
+				}
+				else if( action === 'com.maagames.versus.stoptimer' )
+				{
+					const json = `{ "timerStop": "0" }`;
+					versusSocket.send(json);
+				}
+				else if( action === 'com.maagames.versus.pausetimer' )
+				{
+					const json = `{ "timerPause": "0" }`;
+					versusSocket.send(json);
+				}
+				
+				else if( action === 'com.maagames.versus.reset' )
+				{
+					const json = `{ "reset": "0" }`;
+					versusSocket.send(json);
+				}
+				else if( action === 'com.maagames.versus.swap' )
+				{
+					const json = `{ "swap": "0" }`;
+					versusSocket.send(json);
+				}
+				else if( action === 'com.maagames.versus.sortasc' )
+				{
+					const json = `{ "sortasc": "0" }`;
+					versusSocket.send(json);
+				}
+				else if( action === 'com.maagames.versus.sortdesc' )
+				{
+					const json = `{ "sortdesc": "0" }`;
+					versusSocket.send(json);
+				}
 			}
 			else
 			{
@@ -593,6 +636,8 @@ function StreamDeckOnMessage( evt )
 						};
 
 						deckSocket.send(JSON.stringify(newSettings));
+						
+				        versusSocket.send('{"updateMe":"1"}');
 					}
 					else if( payload.hasOwnProperty("httpPort") )
 					{

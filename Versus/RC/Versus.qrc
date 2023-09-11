@@ -55,5 +55,7 @@
         <file>bg_list.png</file>
         <file>bg_logo.png</file>
         <file>btn-disabled.9.png</file>
+        <file>lightning.png</file>
+        <file>corner.png</file>
     </qresource>
 </RCC>

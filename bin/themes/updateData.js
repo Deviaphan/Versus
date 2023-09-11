@@ -86,7 +86,7 @@ function ParseData(event)
 
 function UpdateData()
 {
-	ws = new WebSocket( "ws://localhost:%PORT%" );
+	ws = new WebSocket( "ws://%LOCALHOST%:%PORT%" );
 	ws.onopen = function(){ ws.send('{"updateMe":"1"}'); };
 
 	ws.onmessage = ParseData;

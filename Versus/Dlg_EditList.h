@@ -23,6 +23,7 @@ public:
 
 public:
 	void UpdateList();
+	int GetSelectedIndex() const;
 
 public slots:
 	void OnAddLine();

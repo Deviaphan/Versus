@@ -9,10 +9,7 @@
 #include <QtWidgets>
 #include "Themes/Dlg_SelectLogo.h"
 
-const QString g_editTitle( "☛  EDIT  ☚" );
-
 const QString g_defaultLogo( "versus_logo/.default/grey.jpg" );
-
 
 void ReadStringArray( const QString& fileName, std::set<QString>& items )
 {
@@ -147,7 +144,7 @@ void SaveTournamentList( QJsonObject& root, QComboBox* itemList )
 		QJsonArray itemArray;
 
 		const int count = itemList->count();
-		for( int idx = 1; idx < count; ++idx )
+		for( int idx = 0; idx < count; ++idx )
 		{
 			QString text = itemList->itemText( idx );
 			itemArray.append( text );
@@ -165,8 +162,6 @@ void LoadTournamentList( QJsonObject* root, QComboBox* itemList )
 	try
 	{
 		QSignalBlocker blocker( itemList );
-
-		itemList->addItem( g_editTitle );
 
 		QJsonArray itemArray;
 		if( root && (*root)["tournaments"].isArray() )
@@ -188,7 +183,7 @@ void LoadTournamentList( QJsonObject* root, QComboBox* itemList )
 		{
 			itemList->addItem( "Versus Ⓡevolution" );
 			itemList->setCurrentText( "Versus Ⓡevolution" );
-			itemList->setCurrentIndex( 1 );
+			itemList->setCurrentIndex( 0 );
 		}
 	}
 	catch( ... )
@@ -208,7 +203,7 @@ void SaveGroupList( QComboBox* itemList )
 
 		std::set<QString> userItems;
 		const int count = itemList->count();
-		for( int idx = 1; idx < count; ++idx )
+		for( int idx = 0; idx < count; ++idx )
 		{
 			QString text = itemList->itemText( idx );
 			if( items.find( text ) == items.end() )
@@ -230,8 +225,6 @@ void LoadGroupList( QComboBox* itemList )
 	{
 		QSignalBlocker blocker( itemList );
 
-		itemList->addItem( g_editTitle );
-
 		std::set<QString> items;
 		const QString groupPath = QCoreApplication::applicationDirPath() + "/group.json";
 		const QString groupPathUser = QCoreApplication::applicationDirPath() + "/group-user.json";
@@ -244,7 +237,7 @@ void LoadGroupList( QComboBox* itemList )
 				itemList->addItem( item );
 			}
 
-			itemList->setCurrentIndex( 1 );
+			itemList->setCurrentIndex( 0 );
 		}
 	}
 	catch( ... )
@@ -264,7 +257,7 @@ void SaveBestOfList( QComboBox* itemList )
 
 		std::set<QString> userItems;
 		const int count = itemList->count();
-		for( int idx = 1; idx < count; ++idx )
+		for( int idx = 0; idx < count; ++idx )
 		{
 			QString text = itemList->itemText( idx );
 			if( items.find( text ) == items.end() )
@@ -288,8 +281,6 @@ void LoadBestOfList( QComboBox* itemList )
 	{
 		QSignalBlocker blocker( itemList );
 
-		itemList->addItem( g_editTitle );
-
 		std::set<QString> items;
 		const QString boPath = QCoreApplication::applicationDirPath() + "/bestof.json";
 		const QString boPathUser = QCoreApplication::applicationDirPath() + "/bestof-user.json";
@@ -302,7 +293,7 @@ void LoadBestOfList( QComboBox* itemList )
 				itemList->addItem( item );
 			}
 
-			itemList->setCurrentIndex( 1 );
+			itemList->setCurrentIndex( 0 );
 		}
 	}
 	catch( ... )

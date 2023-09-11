@@ -9,12 +9,12 @@
 #include "ui_Dlg_Settings.h"
 #include "Versus.h"
 
-QString GetServerAddress( const QString & port )
+QString GetServerAddress( const QString& ip, const QString & port )
 {
-	return QString( "localhost:%1" ).arg( port );
+	return QString( "%1:%2" ).arg( ip ).arg( port );
 }
 
-Dlg_Settings::Dlg_Settings( Versus* parent, int webPort, int tcpPort, bool autoStart )
+Dlg_Settings::Dlg_Settings( Versus* parent, const QString & ip, int webPort, int tcpPort, bool autoStart )
 	: QDialog( parent, Qt::WindowFlags::enum_type::WindowCloseButtonHint )
 	, ui(new Ui::Dlg_SettingsClass())
 	, _base( parent )
@@ -26,8 +26,10 @@ Dlg_Settings::Dlg_Settings( Versus* parent, int webPort, int tcpPort, bool autoS
 	connect( ui->btnOK, &QPushButton::clicked, this, &QDialog::accept );
 	connect( ui->btnCancel, &QPushButton::clicked, this, &QDialog::reject );
 
-	connect( ui->portScore, &QLineEdit::textChanged, this, [this](){ ui->serverAddress->setText( GetServerAddress( ui->portScore->text() ) ); } );
+	connect( ui->portScore, &QLineEdit::textChanged, this, [this](){ ui->serverAddress->setText( GetServerAddress( ui->serverIP->text(), ui->portScore->text() ) ); } );
+	connect( ui->serverIP, &QLineEdit::textChanged, this, [this](){ ui->serverAddress->setText( GetServerAddress( ui->serverIP->text(), ui->portScore->text() ) ); } );
 
+	ui->serverIP->setText( ip );
 	ui->portScore->setText( QString::number( webPort ) );
 	ui->portScore->setValidator( new QIntValidator( 1025, 65535, this ) );
 
@@ -36,7 +38,7 @@ Dlg_Settings::Dlg_Settings( Versus* parent, int webPort, int tcpPort, bool autoS
 
 	ui->cbAutostart->setCheckState( autoStart ? Qt::CheckState::Checked : Qt::CheckState::Unchecked );
 
-	ui->serverAddress->setText( GetServerAddress( QString::number( webPort ) ) );
+	ui->serverAddress->setText( GetServerAddress( ip, QString::number( webPort ) ) );
 
 	QPixmap bkgnd( ":/Versus/bg_settings.png" );
 	//bkgnd = bkgnd.scaled( this->size(), Qt::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation );
@@ -48,6 +50,11 @@ Dlg_Settings::Dlg_Settings( Versus* parent, int webPort, int tcpPort, bool autoS
 Dlg_Settings::~Dlg_Settings()
 {
 	delete ui;
+}
+
+QString Dlg_Settings::GetLocalIP() const
+{
+	return ui->serverIP->text();
 }
 
 int Dlg_Settings::GetWebServerPort() const

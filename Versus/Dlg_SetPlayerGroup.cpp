@@ -79,13 +79,19 @@ void Dlg_SetPlayerGroup::Init( const std::vector<PlayerItemData> & playerSet )
 {
 	_currentPlayerSet = &playerSet;
 
+	std::vector<QString> names;
+	for( const auto& p : *_currentPlayerSet )
+	{
+		if( !p.player.isEmpty() )
+			names.emplace_back( p.player );
+	}
+	std::sort( names.begin(), names.end() );
+
 	QString title;
-	const size_t size = _currentPlayerSet->size();
+	const size_t size = names.size();
 	for( size_t index = 0; index < size; ++index )
 	{
-		auto& item = _currentPlayerSet->at( index );
-
-		title += item.player;
+		title += names[index];
 		if( index != (size - 1) )
 		{
 			title += "●";
@@ -98,9 +104,7 @@ void Dlg_SetPlayerGroup::Init( const std::vector<PlayerItemData> & playerSet )
 
 		for( size_t index = 0; index < size; ++index )
 		{
-			auto& item = _currentPlayerSet->at( index );
-
-			title += item.player.left( 3 );
+			title += names[index].left( 3 );
 			if( index != (size - 1) )
 			{
 				title += "●";

@@ -14,10 +14,11 @@ class Dlg_Settings : public QDialog
 	Q_OBJECT
 
 public:
-	Dlg_Settings( Versus * parent, int webPort, int tcpPort, bool autoStart );
+	Dlg_Settings( Versus * parent, const QString & ip, int webPort, int tcpPort, bool autoStart );
 	~Dlg_Settings();
 
 public:
+	QString GetLocalIP() const;
 	int GetWebServerPort() const;
 	int GetTcpSocketPort() const;
 	bool GetAutoStart() const;

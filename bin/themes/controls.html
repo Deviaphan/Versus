@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+	<script type="text/javascript" src="updateDataAdvanced.js"></script>
+	<script type="text/javascript" src="default_timer.js"></script>
+	<script type="text/javascript" src="default_send.js"></script>
+	
+	<style>
+body{
+	padding: 0;
+	margin: 0px 0px;
+	font-family: system-ui;
+}
+
+.photo{
+	width: 1.5em;
+	height: 1.5em;
+	background: url("") no-repeat;
+	background-size: 1.5em 1.5em;
+	background-position: center;
+	background-color: #ccc;
+}
+
+.Score{
+	font-size: 6em;
+	font-weight:bold;
+	background: linear-gradient(to right, #bbb, #eee, #bbb);
+}
+
+.Name{
+	width:60%;
+	color:#fff;
+	text-shadow: 1px 1px 2px black, -1px -1px 2px black;
+	overflow:clip;
+}
+.Btn
+{
+height:2em;
+cursor: pointer;
+user-select:none;
+}
+
+.BtnDec{
+	cursor: pointer;
+	text-align:center;
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoBAMAAAB+0KVeAAAAIVBMVEX///+LdaGlndHIw+OqotTSzuj////t6/arpNTr6fXPy+aUPIdwAAAAAXRSTlMAQObYZgAAAHZJREFUeAG10jcVwzAURuGEQQIhvcxBIBCGoMJAszAIg2m629e9xv/4nbu9d9i647m1U4rX1vbHXw8+lOtiIG0HH1J6sAqNAFshSAgSgoQgIdgKwVAq18GvlLaFpGArBUlBUpAUJAWr1Hfxa8T04die2H3ajYsB6hVcYvq8d/8AAAAASUVORK5CYII=") no-repeat;
+	background-size: 40px 40px;
+	background-position: center;
+	background-color:#ecc;
+	user-select:none;
+}
+
+.BtnInc{
+	cursor: pointer;
+	text-align:center;
+	background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoBAMAAAB+0KVeAAAAIVBMVEX///+LdaGlndGqotTIw+OrpNTt6/b////Szujr6fXPy+a9kN73AAAAAXRSTlMAQObYZgAAAHRJREFUeAG10rcZAjEUBGHoAErAVYBvRC2oBJlQTZCrUfwEq3d4bsP/m0Rm8OuG42ajC06b9YyrDlz4YtGFaHEfQjE4O5CCmoKkiqSKpIqkoKaKCx+yQRdCVSQENQQ1BAkVCRUJFfeEep/1jYdjfaP9tD/uBAGAXhx0eSgcAAAAAElFTkSuQmCC") no-repeat;
+	background-size: 40px 40px;
+	background-position: center;
+	background-color:#cec;
+	user-select:none;
+}
+
+.time_data{
+font-size: 3em;
+}
+
+table{
+width: 100%;
+border: 1px solid black;
+}
+th{
+font-size: 2em;
+}
+td{
+border: 1px solid black;
+text-align: center;
+font-size: 3em;
+}
+	</style>
+</head>
+
+<body onload="OnChangeTimer('0'); UpdateData();">
+
+__PLAYERS__
+
+
+<br/>
+<br/>
+<br/>
+<br/>
+<table>
+   <tr><td class="Btn" style="background-color:#ccc;" onclick='OnSendCommand("sortasc")'>Sort Ascending</td></tr>
+   <tr><td class="Btn" style="background-color:#eee;" onclick='OnSendCommand("sortdesc")'>Sort Descending</td></tr>
+   <tr><td>&nbsp;</td></tr>
+   <tr><td class="Btn" style="background-color:#eee;" onclick='OnSendCommand("reset")'>Reset scores</td></tr>
+</table>
+<br/>
+<br/>
+<br/>
+<table>
+   <tr><th class="time_data">Time: <span class="hh">00</span>:<span class="mm">00</span>'<span class="ss">00</span></th></tr>
+   <tr><td class="Btn" style="background-color:#beb;" onclick='OnSendCommand("timerStart")'>Start</td></tr>
+   <tr><td class="Btn" style="background-color:#bbe;" onclick='OnSendCommand("timerPause")'>Pause</td></tr>
+   <tr><td class="Btn" style="background-color:#ebb;" onclick='OnSendCommand("timerStop")'>Stop</td></tr>
+</table>
+
+</body>
+</html>

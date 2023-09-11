@@ -46,6 +46,7 @@ Versus::Versus( QWidget* parent )
 	, _numHotkeys( 4 )
 	, _decStep( -1.0 )
 	, _incStep( 1.0 )
+	, _localIP("localhost")
 	, _webServerPort( 9090 )
 	, _tcpSocketPort( 9091 )
 	, _autoStart( false )
@@ -104,9 +105,13 @@ Versus::Versus( QWidget* parent )
 	}
 
 	{
-		connect( ui.tournamentTitle, QOverload<int>::of( &QComboBox::currentIndexChanged ), this, &Versus::UpdateTournament );
-		connect( ui.bestOf, QOverload<int>::of( &QComboBox::currentIndexChanged ), this, &Versus::UpdateBestOf );
-		connect( ui.stageTitle, QOverload<int>::of( &QComboBox::currentIndexChanged ), this, &Versus::UpdateStage );
+		connect( ui.btnEditTournament, &QPushButton::clicked, this, &Versus::OnEditTournamentTitle );
+		connect( ui.btnEditStage, &QPushButton::clicked, this, &Versus::OnEditStage );
+		connect( ui.btnEditBestOf, &QPushButton::clicked, this, &Versus::OnEditBestOf );
+
+		connect( ui.tournamentTitle, QOverload<int>::of( &QComboBox::currentIndexChanged ), this, [this]( int index ){ui.tournamentTitle->setCurrentIndex( index ); } );
+		connect( ui.bestOf, QOverload<int>::of( &QComboBox::currentIndexChanged ), this, [this]( int index ){ui.bestOf->setCurrentIndex( index ); } );
+		connect( ui.stageTitle, QOverload<int>::of( &QComboBox::currentIndexChanged ), this, [this]( int index ){ui.stageTitle->setCurrentIndex( index ); } );
 	}
 
 	{
@@ -164,8 +169,8 @@ void Versus::Init()
 
 		connect( &_downloader, &Downloader::onReady, this, &Versus::CheckVersion );
 
-		//const QUrl updateUrl( "info file" );
-		//_downloader.GetData( updateUrl );
+		const QUrl updateUrl( "http://maagames.ru/files/versus/version.json" );
+		_downloader.GetData( updateUrl );
 	}
 
 	ui.btnScoreServer->setIconSize( QSize( 48, 48 ) );
@@ -258,11 +263,17 @@ void Versus::LoadSettings()
 	const QString themeDir = ReadJsonValue( rootObj, "themeDir" );
 	const int themeStyleIndex = ReadJsonValue( rootObj, "themeStyleIndex", "0" ).toInt();
 
+	const QString localIP = ReadJsonValue( rootObj, "localIP" );
+	if( !localIP.isEmpty() )
+	{
+		_localIP = localIP;
+	}
+
 	const QString port = ReadJsonValue( rootObj, "port" );
 	if( !port.isEmpty() )
 	{
 		_webServerPort = port.toInt();
-	}
+	}	
 
 	const QString portTcp = ReadJsonValue( rootObj, "portTcp" );
 	if( !portTcp.isEmpty() )
@@ -393,6 +404,7 @@ void Versus::SaveSettings()
 	rootObj.insert( "themeDir", _themeInfo.dir );
 	rootObj.insert( "themeStyleIndex", QString::number( _themeInfo.currentStyle ) );
 
+	rootObj.insert( "localIP", _localIP );
 	rootObj.insert( "port", QString::number( _webServerPort ) );
 	rootObj.insert( "portTcp", QString::number( _tcpSocketPort ) );
 	rootObj.insert( "autoStart", QString::number( (int)_autoStart ) );
@@ -766,56 +778,126 @@ void Versus::StartServer()
 
 	const int port = GetHTMLPort();
 	const int tcpPort = GetTCPPort();
+	const QString & ip = GetLocalIP();
 
 	_server = std::make_unique<QHttpServer>( this );
 
-	_server->route( "/", [this]() {
+	_server->route( "/", [this]()
+	{
 		const QString indexFile = this->_themeInfo.dir + "/index.html";
-	return QHttpServerResponse::fromFile( indexFile );
+		return QHttpServerResponse::fromFile( indexFile );
 	} );
 
-	_server->route( "/updateData.js", [tcpPort]() {
+	_server->route( "/controls.html", [this]()
+	{
+		QString htmlPath = QCoreApplication::applicationDirPath();
+		htmlPath += "/themes/controls.html";
+
+		QFile inFile( htmlPath );
+		inFile.open( QIODevice::ReadOnly | QIODevice::Text );
+		const QByteArray byteData = inFile.readAll();
+		inFile.close();
+
+		QString playersData;
+		
+		const QString tableTemplate = R"!(<table>
+		<tr><td class='__PXLOGO__ photo'></td><th class='__PXNAME__ Name' style='background-color:__PLAYERCOLOR__;'>__PLAYER_NAME__</th><td class='__TXLOGO__ photo'></td></tr>
+		<tr><td class="BtnDec" onclick='OnSendScore( "__PXSCORE__", "-")'>&nbsp;</td><td class="__PXSCORE__ Score">__PLAYER_SCORE__</td><td class="BtnInc" onclick='OnSendScore( "__PXSCORE__", "+")'>&nbsp;</td></tr>
+		</table>)!";
+
+		for( int i = 0; i < (int)_currentSet.size(); ++i )
+		{
+			const PlayerItemData& item = _currentSet.at( i );
+
+			const QString pXname = QString( "p%1name" ).arg( i + 1 );
+			const QString pXscore = QString( "p%1score" ).arg( i + 1 );
+			const QString pXlogo = QString( "p%1logo" ).arg( i + 1 );
+			//const QString tXname = QString( "t%1name" ).arg( i + 1 );
+			const QString tXlogo = QString( "t%1logo" ).arg( i + 1 );
+			const QString pXColor = QString( "p%1color" ).arg( i + 1 );
+
+			QString tt = tableTemplate;
+			
+			tt.replace( "__PXLOGO__", pXlogo );
+			tt.replace( "__PXNAME__", pXname );
+			tt.replace( "__TXLOGO__", tXlogo );
+			tt.replace( "__PLAYERCOLOR__", item.scoreColor );
+			tt.replace( "__PLAYER_NAME__", item.player );
+			tt.replace( "__PLAYER_SCORE__", item.score );
+			tt.replace( "__PXSCORE__", pXscore );
+
+			playersData += tt;
+		}
+
+		QString htmlData( byteData );
+
+		htmlData.replace( "__PLAYERS__", playersData );
+
+		return QHttpServerResponse( htmlData );
+	} );
+
+	_server->route( "/default_send.js", [this]()
+	{
 		QString jsPath = QCoreApplication::applicationDirPath();
-	jsPath += "/themes/updateData.js";
-
-	QFile inFile( jsPath );
-	inFile.open( QIODevice::ReadOnly | QIODevice::Text );
-	const QByteArray byteData = inFile.readAll();
-	inFile.close();
-
-	QString jsData( byteData );
-	jsData.replace( "%PORT%", QString::number( tcpPort ) );
-
-	return QHttpServerResponse( jsData );
+		jsPath += "/themes/default_send.js";
+		return QHttpServerResponse::fromFile( jsPath );
 	} );
 
-	_server->route( "/updateDataAdvanced.js", [tcpPort]() {
+	_server->route( "/default_timer.js", [this]()
+	{
 		QString jsPath = QCoreApplication::applicationDirPath();
-	jsPath += "/themes/updateDataAdvanced.js";
-
-	QFile inFile( jsPath );
-	inFile.open( QIODevice::ReadOnly | QIODevice::Text );
-	const QByteArray byteData = inFile.readAll();
-	inFile.close();
-
-	QString jsData( byteData );
-	jsData.replace( "%PORT%", QString::number( tcpPort ) );
-
-	return QHttpServerResponse( jsData );
+		jsPath += "/themes/default_timer.js";
+		return QHttpServerResponse::fromFile( jsPath );
 	} );
 
-	_server->route( "/versus_logo/<arg>", []( const QUrl& url ) {
+	_server->route( "/updateData.js", [tcpPort, ip]()
+	{
+		QString jsPath = QCoreApplication::applicationDirPath();
+		jsPath += "/themes/updateData.js";
+
+		QFile inFile( jsPath );
+		inFile.open( QIODevice::ReadOnly | QIODevice::Text );
+		const QByteArray byteData = inFile.readAll();
+		inFile.close();
+
+		QString jsData( byteData );
+		jsData.replace( "%LOCALHOST%", ip );
+		jsData.replace( "%PORT%", QString::number( tcpPort ) );
+
+		return QHttpServerResponse( jsData );
+	} );
+
+	_server->route( "/updateDataAdvanced.js", [tcpPort, ip]()
+	{
+		QString jsPath = QCoreApplication::applicationDirPath();
+		jsPath += "/themes/updateDataAdvanced.js";
+
+		QFile inFile( jsPath );
+		inFile.open( QIODevice::ReadOnly | QIODevice::Text );
+		const QByteArray byteData = inFile.readAll();
+		inFile.close();
+
+		QString jsData( byteData );
+		jsData.replace( "%LOCALHOST%", ip );
+		jsData.replace( "%PORT%", QString::number( tcpPort ) );
+
+		return QHttpServerResponse( jsData );
+	} );
+
+	_server->route( "/versus_logo/<arg>", []( const QUrl& url )
+	{
 		const QString logoPath = QCoreApplication::applicationDirPath() + "/versus_logo/" + url.path();
-	const QDir logoDir( logoPath );
+		const QDir logoDir( logoPath );
 
-	return QHttpServerResponse::fromFile( logoDir.absolutePath() );
+		return QHttpServerResponse::fromFile( logoDir.absolutePath() );
 	} );
 
-	_server->route( "/<arg>", [this]( const QUrl& url ) {
+	_server->route( "/<arg>", [this]( const QUrl& url ) 
+	{
 		const QString rootPath = this->_themeInfo.dir + "/" + url.path();
-	const QDir rootDir( rootPath );
+		const QDir rootDir( rootPath );
 
-	return QHttpServerResponse::fromFile( rootDir.absolutePath() );
+		return QHttpServerResponse::fromFile( rootDir.absolutePath() );
 	} );
 
 	_server->listen( QHostAddress::Any, port );
@@ -867,114 +949,89 @@ void Versus::StopServer()
 	VS_CATCH;
 }
 
-void Versus::UpdateTournament( int index )
+void Versus::OnEditTournamentTitle()
 {
 	VS_TRY;
 
-	if( index == 0 )
+	Dlg_EditList dlg( this );
+
+	for( int i = 0; i < ui.tournamentTitle->count(); ++i )
 	{
-		Dlg_EditList dlg( this );
-
-		for( int i = 1; i < ui.tournamentTitle->count(); ++i )
-		{
-			dlg.items.emplace_back( ui.tournamentTitle->itemText( i ) );
-		}
-
-		dlg.UpdateList();
-
-		dlg.exec();
-
-		QSignalBlocker blocker( ui.tournamentTitle );
-
-		ui.tournamentTitle->clear();
-
-		ui.tournamentTitle->addItem( g_editTitle );
-		for( const auto& item : dlg.items )
-		{
-			ui.tournamentTitle->addItem( item );
-		}
-
-		ui.tournamentTitle->setCurrentIndex( 1 );
+		dlg.items.emplace_back( ui.tournamentTitle->itemText( i ) );
 	}
-	else
+
+	dlg.UpdateList();
+
+	dlg.exec();
+
+	QSignalBlocker blocker( ui.tournamentTitle );
+
+	ui.tournamentTitle->clear();
+
+	for( const auto& item : dlg.items )
 	{
-		ui.tournamentTitle->setCurrentIndex( index );
+		ui.tournamentTitle->addItem( item );
 	}
+
+	ui.tournamentTitle->setCurrentIndex( dlg.GetSelectedIndex() );
 
 	VS_CATCH;
 }
 
-void Versus::UpdateStage( int index )
+void Versus::OnEditStage()
 {
 	VS_TRY;
 
-	if( index == 0 )
+	Dlg_EditList dlg( this );
+
+	for( int i = 0; i < ui.stageTitle->count(); ++i )
 	{
-		Dlg_EditList dlg( this );
-
-		for( int i = 1; i < ui.stageTitle->count(); ++i )
-		{
-			dlg.items.emplace_back( ui.stageTitle->itemText( i ) );
-		}
-
-		dlg.UpdateList();
-
-		dlg.exec();
-
-		QSignalBlocker blocker( ui.stageTitle );
-
-		ui.stageTitle->clear();
-
-		ui.stageTitle->addItem( g_editTitle );
-		for( const auto& item : dlg.items )
-		{
-			ui.stageTitle->addItem( item );
-		}
-
-		ui.stageTitle->setCurrentIndex( 1 );
+		dlg.items.emplace_back( ui.stageTitle->itemText( i ) );
 	}
-	else
+
+	dlg.UpdateList();
+
+	dlg.exec();
+
+	QSignalBlocker blocker( ui.stageTitle );
+
+	ui.stageTitle->clear();
+
+	for( const auto& item : dlg.items )
 	{
-		ui.stageTitle->setCurrentIndex( index );
+		ui.stageTitle->addItem( item );
 	}
+
+	ui.stageTitle->setCurrentIndex( dlg.GetSelectedIndex() );
 
 	VS_CATCH;
 }
 
-void Versus::UpdateBestOf( int index )
+void Versus::OnEditBestOf()
 {
 	VS_TRY;
 
-	if( index == 0 )
+	Dlg_EditList dlg( this );
+
+	for( int i = 0; i < ui.bestOf->count(); ++i )
 	{
-		Dlg_EditList dlg( this );
-
-		for( int i = 1; i < ui.bestOf->count(); ++i )
-		{
-			dlg.items.emplace_back( ui.bestOf->itemText( i ) );
-		}
-
-		dlg.UpdateList();
-
-		dlg.exec();
-
-		QSignalBlocker blocker( ui.bestOf );
-
-		ui.bestOf->clear();
-
-		ui.bestOf->addItem( g_editTitle );
-
-		for( const auto& item : dlg.items )
-		{
-			ui.bestOf->addItem( item );
-		}
-
-		ui.bestOf->setCurrentIndex( 1 );
+		dlg.items.emplace_back( ui.bestOf->itemText( i ) );
 	}
-	else
+
+	dlg.UpdateList();
+
+	dlg.exec();
+
+	QSignalBlocker blocker( ui.bestOf );
+
+	ui.bestOf->clear();
+
+	for( const auto& item : dlg.items )
 	{
-		ui.bestOf->setCurrentIndex( index );
+		ui.bestOf->addItem( item );
 	}
+
+	ui.bestOf->setCurrentIndex( dlg.GetSelectedIndex() );
 
 	VS_CATCH;
 }
@@ -1034,12 +1091,48 @@ void Versus::ProcessReceivedMessage( const QString& message )
 		return;
 	}
 
-	QJsonObject rootObj = doc.object();
+	const QJsonObject rootObj = doc.object();
 
-	const QString forceUpdateScores = ReadJsonValue( rootObj, "updateMe" );
-	if( !forceUpdateScores.isEmpty() )
+	if( !ReadJsonValue( rootObj, "updateMe" ).isEmpty() )
 	{
 		emit OnSendScoreboardData();
+		return;
+	}
+
+	if( !ReadJsonValue( rootObj, "reset" ).isEmpty() )
+	{
+		emit OnResetScores();
+		return;
+	}
+	if( !ReadJsonValue( rootObj, "sortasc" ).isEmpty() )
+	{
+		emit OnSortUp();
+		return;
+	}
+	if( !ReadJsonValue( rootObj, "sortdesc" ).isEmpty() )
+	{
+		emit OnSortDown();
+		return;
+	}
+	if( !ReadJsonValue( rootObj, "swap" ).isEmpty() )
+	{
+		emit OnSortSwap();
+		return;
+	}
+
+	if( !ReadJsonValue( rootObj, "timerStart" ).isEmpty() )
+	{
+		emit OnTimerStart();
+		return;
+	}
+	if( !ReadJsonValue( rootObj, "timerStop" ).isEmpty() )
+	{
+		emit OnTimerStop();
+		return;
+	}
+	if( !ReadJsonValue( rootObj, "timerPause" ).isEmpty() )
+	{
+		emit OnTimerPause();
 		return;
 	}
 
@@ -1049,9 +1142,22 @@ void Versus::ProcessReceivedMessage( const QString& message )
 		const QString p = ReadJsonValue( rootObj, playerId.toLatin1().data() );
 		if( !p.isEmpty() )
 		{
-			double step = p.toDouble();
-			if( step == 0.0 )
+			double step = 0.0;
+
+			if( p == "+" )
+			{
 				step = this->GetIncStep();
+			}
+			else if( p == "-" )
+			{
+				step = this->GetDecStep();
+			}
+			else
+			{
+				step = p.toDouble();
+				if( step == 0.0 )
+					step = this->GetIncStep();
+			}
 
 			EditScore( i + 1, step );
 
@@ -1152,11 +1258,12 @@ void Versus::OnEditSettings()
 {
 	VS_TRY;
 
-	Dlg_Settings dlg( this, _webServerPort, _tcpSocketPort, _autoStart );
+	Dlg_Settings dlg( this, _localIP, _webServerPort, _tcpSocketPort, _autoStart );
 
 	if( dlg.exec() == QDialog::Rejected )
 		return;
 
+	_localIP = dlg.GetLocalIP();
 	_webServerPort = dlg.GetWebServerPort();
 	_tcpSocketPort = dlg.GetTcpSocketPort();
 	_autoStart = dlg.GetAutoStart();
@@ -1172,6 +1279,11 @@ int Versus::GetHTMLPort() const
 int Versus::GetTCPPort() const
 {
 	return _tcpSocketPort;
+}
+
+const QString& Versus::GetLocalIP() const
+{
+	return _localIP;
 }
 
 void Versus::OnResetScores()
@@ -1202,7 +1314,7 @@ void Versus::OnSortUp()
 
 	::std::stable_sort( _currentSet.begin(), _currentSet.end(), []( const auto& lhs, const auto& rhs )->bool
 	{
-		return lhs.score.toInt() < rhs.score.toInt();
+		return lhs.score.toDouble() < rhs.score.toDouble();
 	} );
 
 	UpdatePlayerSet();
@@ -1222,7 +1334,7 @@ void Versus::OnSortDown()
 
 	::std::stable_sort( _currentSet.begin(), _currentSet.end(), []( const auto& lhs, const auto& rhs )->bool
 	{
-		return lhs.score.toInt() > rhs.score.toInt();
+		return lhs.score.toDouble() > rhs.score.toDouble();
 	} );
 
 	UpdatePlayerSet();

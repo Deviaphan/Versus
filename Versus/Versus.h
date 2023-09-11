@@ -62,6 +62,10 @@ public slots:
 	void OnTimerPause();
 	void OnTimerStop();
 
+	void OnEditTournamentTitle();
+	void OnEditStage();
+	void OnEditBestOf();
+
 public:
 	void ProcessReceivedMessage( const QString& message );
 
@@ -80,15 +84,13 @@ protected:
 protected:
 	int GetHTMLPort() const;
 	int GetTCPPort() const;
+	const QString& GetLocalIP() const;
 
 	void CheckVersion();
 
 	void StartServer();
 	void StopServer();
 
-	void UpdateTournament( int index );
-	void UpdateStage( int index );
-	void UpdateBestOf( int index );
 
 	void UpdatePlayerSet();
 	void ReadItems() const;
@@ -128,8 +130,10 @@ protected:
 	double _decStep;
 	double _incStep;
 
+	QString _localIP;
 	int _webServerPort;
 	int _tcpSocketPort;
+
 	bool _autoStart;
 
 	std::vector<PlayerItemData> _currentSet = {};

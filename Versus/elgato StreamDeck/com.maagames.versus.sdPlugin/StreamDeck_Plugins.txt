@@ -1,0 +1,3 @@
+https://developer.elgato.com/documentation/stream-deck/sdk/property-inspector/
+
+C:\Users\Devi\AppData\Roaming\Elgato\StreamDeck\Plugins

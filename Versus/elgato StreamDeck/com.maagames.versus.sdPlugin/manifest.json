@@ -41,6 +41,61 @@
             "UUID": "com.maagames.versus.flag",
 			"PropertyInspectorPath": "flag_inspector.html"
         },
+		
+		{
+            "Icon": "actionIconReset",
+            "Name": "Reset",
+            "States": [{
+				    "Image": "actionImageReset",
+                    "TitleAlignment": "middle",
+                    "FontSize": "18"
+                }
+            ],
+            "SupportedInMultiActions": false,
+            "Tooltip": "Reset scores",
+            "UUID": "com.maagames.versus.reset"
+        },
+		{
+            "Icon": "actionIconSortAsc",
+            "Name": "Sort ascending",
+            "States": [{
+				    "Image": "actionImageSortAsc",
+                    "TitleAlignment": "middle",
+                    "FontSize": "18"
+                }
+            ],
+            "SupportedInMultiActions": false,
+            "Tooltip": "Sort scores ascending",
+            "UUID": "com.maagames.versus.sortasc"
+        },
+		{
+            "Icon": "actionIconSortDesc",
+            "Name": "Sort descending",
+            "States": [{
+				    "Image": "actionImageSortDesc",
+                    "TitleAlignment": "middle",
+                    "FontSize": "18"
+                }
+            ],
+            "SupportedInMultiActions": false,
+            "Tooltip": "Sort scores descending",
+            "UUID": "com.maagames.versus.sortdesc"
+        },
+		{
+            "Icon": "actionIconSwap",
+            "Name": "Swap",
+            "States": [{
+				    "Image": "actionImageSwap",
+                    "TitleAlignment": "middle",
+                    "FontSize": "18"
+                }
+            ],
+            "SupportedInMultiActions": false,
+            "Tooltip": "Swap players order",
+            "UUID": "com.maagames.versus.swap"
+        },
+
+		
 		{
             "Icon": "actionIconTime",
             "Name": "Show timer",
@@ -53,18 +108,59 @@
             "SupportedInMultiActions": false,
             "Tooltip": "Show 'Versus' timer",
             "UUID": "com.maagames.versus.timer"
+        },
+		
+		{
+            "Icon": "actionIconTimeStart",
+            "Name": "Start timer",
+            "States": [{
+				    "Image": "actionTimeImageStart",
+                    "TitleAlignment": "middle",
+                    "FontSize": "18"
+                }
+            ],
+            "SupportedInMultiActions": false,
+            "Tooltip": "Start 'Versus' timer",
+            "UUID": "com.maagames.versus.starttimer"
+        },
+		{
+            "Icon": "actionIconTimeStop",
+            "Name": "Stop timer",
+            "States": [{
+				    "Image": "actionTimeImageStop",
+                    "TitleAlignment": "middle",
+                    "FontSize": "18"
+                }
+            ],
+            "SupportedInMultiActions": false,
+            "Tooltip": "Stop 'Versus' timer",
+            "UUID": "com.maagames.versus.stoptimer"
+        },
+		{
+            "Icon": "actionIconTimePause",
+            "Name": "Pause timer",
+            "States": [{
+				    "Image": "actionTimeImagePause",
+                    "TitleAlignment": "middle",
+                    "FontSize": "18"
+                }
+            ],
+            "SupportedInMultiActions": false,
+            "Tooltip": "Pause 'Versus' timer",
+            "UUID": "com.maagames.versus.pausetimer"
         }
+
     ],
     "SDKVersion": 2,
     "Author": "maaGames",
     "CodePath": "main.html",
     "Category": "Versus",
     "CategoryIcon": "versus-logo",
-    "Description": "Show scores from 'Versus rEvolution' scoreboard",
+    "Description": "Show and control scores from 'Versus rEvolution' scoreboard",
     "Name": "Versus",
     "Icon": "pluginIcon",
     "URL": "https://obsproject.com/forum/resources/versus-%E2%93%87evolution-scoreboard.1339/",
-    "Version": "2.0",
+    "Version": "2.3.0",
     "OS": [{
             "Platform": "windows",
             "MinimumVersion": "10"

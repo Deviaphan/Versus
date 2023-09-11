@@ -89,3 +89,10 @@ void Dlg_EditList::OnRemoveLine()
 		items.erase( items.begin() + index );
 	}
 }
+
+int Dlg_EditList::GetSelectedIndex() const
+{
+	const int index = ui->listItems->currentRow();
+
+	return (std::max)(index, 0);
+}

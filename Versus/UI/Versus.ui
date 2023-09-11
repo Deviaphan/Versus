@@ -672,26 +672,7 @@ image: url(:/Versus/time_stop.png);
           </rect>
          </property>
          <property name="text">
-          <string>ver 2.2</string>
-         </property>
-        </widget>
-        <widget class="QLabel" name="donate">
-         <property name="geometry">
-          <rect>
-           <x>50</x>
-           <y>60</y>
-           <width>121</width>
-           <height>41</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://www.donationalerts.com/r/deviaphan&quot;&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline; color:#ffff7f;&quot;&gt;Donate&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="textFormat">
-          <enum>Qt::MarkdownText</enum>
-         </property>
-         <property name="openExternalLinks">
-          <bool>true</bool>
+          <string>ver 2.3</string>
          </property>
         </widget>
         <widget class="QLabel" name="label_6">
@@ -742,6 +723,47 @@ image: url(:/Versus/time_stop.png);
           <pixmap resource="../RC/Versus.qrc">:/Versus/youtube.png</pixmap>
          </property>
         </widget>
+        <widget class="QLabel" name="donate_2">
+         <property name="geometry">
+          <rect>
+           <x>50</x>
+           <y>60</y>
+           <width>131</width>
+           <height>51</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://boosty.to/deviaphan/donate&quot;&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline; color:#55ff7f;&quot;&gt;boosty.to&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p align=&quot;right&quot;&gt;&lt;a href=&quot;https://www.donationalerts.com/r/deviaphan&quot;&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline; color:#55ff7f;&quot;&gt;Donation alerts&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="textFormat">
+          <enum>Qt::MarkdownText</enum>
+         </property>
+         <property name="openExternalLinks">
+          <bool>true</bool>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_2">
+         <property name="geometry">
+          <rect>
+           <x>50</x>
+           <y>50</y>
+           <width>168</width>
+           <height>48</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="../RC/Versus.qrc">:/Versus/lightning.png</pixmap>
+         </property>
+        </widget>
+        <zorder>label_2</zorder>
+        <zorder>donate_2</zorder>
+        <zorder>label</zorder>
+        <zorder>label_6</zorder>
+        <zorder>youtube</zorder>
+        <zorder>label_4</zorder>
        </widget>
       </item>
      </layout>
@@ -810,7 +832,7 @@ image: url(:/Versus/time_stop.png);
           <rect>
            <x>80</x>
            <y>25</y>
-           <width>171</width>
+           <width>151</width>
            <height>22</height>
           </rect>
          </property>
@@ -842,7 +864,7 @@ image: url(:/Versus/time_stop.png);
           <rect>
            <x>320</x>
            <y>25</y>
-           <width>141</width>
+           <width>131</width>
            <height>22</height>
           </rect>
          </property>
@@ -867,7 +889,7 @@ image: url(:/Versus/time_stop.png);
           <rect>
            <x>80</x>
            <y>0</y>
-           <width>381</width>
+           <width>371</width>
            <height>22</height>
           </rect>
          </property>
@@ -876,6 +898,72 @@ image: url(:/Versus/time_stop.png);
          </property>
          <property name="editable">
           <bool>true</bool>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="btnEditStage">
+         <property name="geometry">
+          <rect>
+           <x>235</x>
+           <y>26</y>
+           <width>21</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton
+{
+image: url(:/Versus/expand.png);
+}</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="btnEditBestOf">
+         <property name="geometry">
+          <rect>
+           <x>454</x>
+           <y>26</y>
+           <width>21</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton
+{
+image: url(:/Versus/expand.png);
+}</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="btnEditTournament">
+         <property name="geometry">
+          <rect>
+           <x>454</x>
+           <y>0</y>
+           <width>21</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton
+{
+image: url(:/Versus/expand.png);
+}</string>
+         </property>
+         <property name="text">
+          <string/>
          </property>
         </widget>
        </widget>

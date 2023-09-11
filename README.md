@@ -2,6 +2,10 @@
 
 :link: [Download Versus](https://obsproject.com/forum/resources/versus-%E2%93%87evolution-scoreboard.1339/)
 
+:moneybag: [donate boosty.to](https://boosty.to/deviaphan/donate)
+
+:moneybag: [donate dotanion alerts](https://www.donationalerts.com/r/deviaphan)
+
 ## :vs: Description
 
 A scoreboard overlay to your live stream. You can create own themes for any games with simple html5/css3 files.
@@ -27,10 +31,10 @@ A scoreboard overlay to your live stream. You can create own themes for any game
 - support countdown timer, stopwatch and system clock :clock10:
 - elgato Stream Deck plugin
 
-<img src='docs/01.png'>
+![screen_1](docs/01.png)
 
-<img src='docs/02.png'>
+![screen_2](docs/02.png)
 
-<img src='docs/03.png'>
+![screen_3](docs/03.png)
 
-<img src='docs/04.png'>
+![screen_4](docs/04.png)
