@@ -120,12 +120,12 @@
     </Link>
   </ItemDefinitionGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
-    <QtInstall>6.6.0_msvc2019_64</QtInstall>
-    <QtModules>core;gui;network;websockets;widgets;httpserver</QtModules>
+    <QtInstall>6.7.0_msvc2019_64</QtInstall>
+    <QtModules>core;gui;network;widgets;websockets;httpserver</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
-    <QtInstall>6.6.0_msvc2019_64</QtInstall>
+    <QtInstall>6.7.0_msvc2019_64</QtInstall>
     <QtModules>core;gui;network;websockets;widgets;httpserver</QtModules>
     <QtBuildConfig>release</QtBuildConfig>
     <QtDeploy>false</QtDeploy>
