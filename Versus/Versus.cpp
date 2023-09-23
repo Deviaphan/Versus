@@ -902,7 +902,7 @@ void Versus::StartServer()
 
 	_server->listen( QHostAddress::Any, port );
 
-	_socketServer.listen( QHostAddress( "ws://localhost" ), tcpPort );
+	_socketServer.listen( QHostAddress::Any /*"ws://localhost"*/, (quint16)tcpPort );
 
 	ui.btnScoreServer->setIcon( QIcon( QPixmap( ":/Versus/stop.png" ) ) );
 	ui.btnScoreServer->setText( "Stop server" );
