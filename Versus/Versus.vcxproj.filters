@@ -283,4 +283,8 @@
       <Filter>Resource Files</Filter>
     </QtRcc>
   </ItemGroup>
+  <ItemGroup>
+    <QtTranslation Include="..\lang\lang_ru_RU.ts" />
+    <QtTranslation Include="..\lang\lang_en_US.ts" />
+  </ItemGroup>
 </Project>

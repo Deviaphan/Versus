@@ -1,0 +1,30 @@
+﻿
+{
+	"author": "maaGames",
+	"homepage": "vk.com/maagames",
+	"title": "Example. Auto sum",
+	"game": "Any game",
+	"size": "1280 x 720 px",
+	"align": "top / bottom",
+	"numPlayers": "14",
+		"styles": [
+		{
+			"colors": [
+				"#ff0000",
+				"#ff0000",
+				"#0000ff",
+				"#0000ff",
+				"#00ff00",
+				"#00ff00",
+				"#ff00ff",
+				"#ff00ff",
+				"#00ffff",
+				"#00ffff",
+				"#ffff00",
+				"#ffff00",
+				"#0f00f0",
+				"#0f00f0"
+			]
+		}
+	]
+}

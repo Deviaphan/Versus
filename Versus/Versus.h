@@ -7,6 +7,7 @@
 #include <QWebSocketServer>
 #include <QtHttpServer/qhttpserver.h>
 #include <QtWidgets/QDialog>
+#include <QTranslator>
 
 #include "PlayerItemData.h"
 #include "SharedTools.h"
@@ -37,6 +38,7 @@ public:
 	explicit Versus(QWidget *parent = Q_NULLPTR);
     ~Versus() override;
 
+	void InitUI();
 	void Init();
 
 public slots:
@@ -65,6 +67,8 @@ public slots:
 	void OnEditTournamentTitle();
 	void OnEditStage();
 	void OnEditBestOf();
+
+	void OnCopyServerToClipboard();
 
 public:
 	void ProcessReceivedMessage( const QString& message );
@@ -96,7 +100,6 @@ protected:
 	void ReadItems() const;
 
 protected:
-	QString GetSettingsFile() const;
 	void EditScore( int id, double step );
 
     void LoadSettings();
@@ -113,6 +116,7 @@ private:
     Ui::VersusClass ui{};
 
 protected:
+	QTranslator _translator;
 
 	::std::unique_ptr<QHttpServer> _server;
 
@@ -138,12 +142,22 @@ protected:
 
 	std::vector<PlayerItemData> _currentSet = {};
 
-	int _timerGroupIndex;
 	int _timerId;
 	int _totalTime;
 	int _currentTime;
 	TimerEvents _timerState;
 
+	int _usedTimerIndex;
+	QString _countdown;
+	QString _stopwatch;
+
 	bool _stickyEdges;
+
+	QString _lastTitle;
+	QString _lastSub1;
+	QString _lastSub2;
+
+	QString _selectedLanguage;
+	::std::set<LangData> _langs;
 };
 

@@ -140,7 +140,7 @@ border:0px;</string>
     <enum>Qt::Horizontal</enum>
    </property>
   </widget>
-  <widget class="QPushButton" name="btnTeams">
+  <widget class="QPushButton" name="favTeams">
    <property name="geometry">
     <rect>
      <x>340</x>
@@ -156,6 +156,7 @@ border:0px;</string>
     <string notr="true">QPushButton
 {
 image: url(:/Versus/expand.png);
+border: 0px;
 }</string>
    </property>
    <property name="text">
@@ -170,7 +171,7 @@ image: url(:/Versus/expand.png);
   <tabstop>editName</tabstop>
   <tabstop>logoTeam</tabstop>
   <tabstop>editTeam</tabstop>
-  <tabstop>btnTeams</tabstop>
+  <tabstop>favTeams</tabstop>
   <tabstop>btnDelete</tabstop>
  </tabstops>
  <resources>

@@ -1,0 +1,67 @@
+body
+{
+	margin: 0;
+	padding: 0;
+}
+
+.Player1
+{
+	line-height:40px;
+	font-size:35px;
+}
+
+.Player2
+{
+	line-height:40px;
+	font-size:35px;
+}
+
+.SetItems
+{
+	list-style: none;
+	display:inline-table;
+}
+
+ul li
+{
+	display: inline-block;
+}
+
+.SetItem
+{
+	width: 64px;
+	height:64px;
+	display: inline-block;
+}
+
+
+.score
+{
+	width: 60px;
+	height: 30px;
+	border: 1px solid red;
+	text-align:center;
+	line-height:30px;
+	font-size:25px;
+}
+
+.GamesItem
+{
+	width: 100px;
+	height: 64px;
+	line-height:30px;
+	font-size:30px;
+
+}
+.P1Won
+{
+	width: 100%;
+	height: 50%;
+	border: 1px solid blue;
+}
+.P2Won
+{
+	width: 100%;
+	height: 50%;
+	border: 1px solid blue;
+}

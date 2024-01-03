@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+
+	<link rel="stylesheet" href="style.css" />
+	<script type="text/javascript" src="updateDataAdvanced.js"></script>
+	<script type="text/javascript" src="select_scene.js"></script>
+	<script type="text/javascript" src="timer.js"></script>
+	<script type="text/javascript" src="send.js"></script>
+</head>
+
+<body onload="OnSelectScene(); OnChangeTimer('0'); UpdateData();">
+
+<div id="Scene_1">
+<div class="panel"><div class="name p1name">Player 1</div><div class="score p1score">0</div></div>
+<div class="panel"><div class="name p2name">Player 2</div><div class="score p2score">0</div></div>
+<div class="panel"><div class="name p3name">Player 3</div><div class="score p3score">0</div></div>
+<div class="panel"><div class="name p4name">Player 4</div><div class="score p4score">0</div></div>
+
+<div class="time_data">time: <span class="hh">00</span>:<span class="mm">00</span>'<span class="ss">00</span> </div>
+
+
+<div class="ControlPanel">
+<div class="PlayerTitle p1name" style="background-color:#ff0000;">Player 1</div>
+<div class="BtnDec" onclick='OnSendScore( "p1score", "-")'> default Versus decrement </div>
+<div class="Btn p1score"> 123 </div>
+<div class="BtnInc" onclick='OnSendScore( "p1score", "+")'> default Versus increment </div>
+</div>
+
+<div class="ControlPanel">
+<div class="PlayerTitle p2name" style="background-color:#00ff00;">Player 2</div>
+<div class="BtnDec" onclick='OnSendScore( "p2score", "-1")'> -1 </div>
+<div class="Btn p2score"> 123 </div>
+<div class="BtnInc" onclick='OnSendScore( "p2score", "+1")'> +1 </div>
+</div>
+
+<div class="ControlPanel">
+<div class="PlayerTitle p3name" style="background-color:#0000ff;">Player 3</div>
+<div class="BtnDec" onclick='OnSendScore( "p3score", "-10")'> -10 </div>
+<div class="Btn p3score"> 123 </div>
+<div class="BtnInc" onclick='OnSendScore( "p3score", "+10")'> +10 </div>
+</div>
+
+<div class="ControlPanel">
+<div class="PlayerTitle p4name" style="background-color:#ffff00;">Player 4</div>
+<div class="BtnDec" onclick='OnSendScore( "p4score", "+0.5")'> +0.5 </div>
+<div class="Btn p4score"> 123 </div>
+<div class="BtnInc" onclick='OnSendScore( "p4score", "+5.5")'> +5.5 </div>
+</div>
+
+<br/>
+
+<div class="ControlPanel">
+<div class="Btn" style="background-color:#eee;" onclick='OnResetScores()'>Reset scores</div>
+<div class="Btn" style="background-color:#ccc;" onclick='OnSortAsc()'>Sort Ascending</div>
+<div class="Btn" style="background-color:#eee;" onclick='OnSortDesc()'>Sort descending</div>
+</div>
+
+<div class="ControlPanel">
+<div class="Btn" style="background-color:#beb;" onclick='OnTimerStart()'>Timer start</div>
+<div class="Btn" style="background-color:#bbe;" onclick='OnTimerPause()'>Timer pause</div>
+<div class="Btn" style="background-color:#ebb;" onclick='OnTimerStop()'>TimerStop</div>
+</div>
+
+</div>
+
+<div id="RemoteControl">
+
+<div class="ControlPanel">
+<div class="PlayerTitle p1name" style="background-color:#ff0000;">Player 1</div>
+<div class="BtnDec" onclick='OnSendScore( "p1score", "-")'> default Versus decrement </div>
+<div class="Btn p1score"> 123 </div>
+<div class="BtnInc" onclick='OnSendScore( "p1score", "+")'> default Versus increment </div>
+</div>
+
+<div class="ControlPanel">
+<div class="PlayerTitle p2name" style="background-color:#00ff00;">Player 2</div>
+<div class="BtnDec" onclick='OnSendScore( "p2score", "-1")'> -1 </div>
+<div class="Btn p2score"> 123 </div>
+<div class="BtnInc" onclick='OnSendScore( "p2score", "+1")'> +1 </div>
+</div>
+
+<div class="ControlPanel">
+<div class="PlayerTitle p3name" style="background-color:#0000ff;">Player 3</div>
+<div class="BtnDec" onclick='OnSendScore( "p3score", "-10")'> -10 </div>
+<div class="Btn p3score"> 123 </div>
+<div class="BtnInc" onclick='OnSendScore( "p3score", "+10")'> +10 </div>
+</div>
+
+<div class="ControlPanel">
+<div class="PlayerTitle p4name" style="background-color:#ffff00;">Player 4</div>
+<div class="BtnDec" onclick='OnSendScore( "p4score", "+0.5")'> +0.5 </div>
+<div class="Btn p4score"> 123 </div>
+<div class="BtnInc" onclick='OnSendScore( "p4score", "+5.5")'> +5.5 </div>
+</div>
+
+<br/>
+
+<div class="ControlPanel">
+<div class="Btn" style="background-color:#eee;" onclick='OnResetScores()'>Reset scores</div>
+<div class="Btn" style="background-color:#ccc;" onclick='OnSortAsc()'>Sort Ascending</div>
+<div class="Btn" style="background-color:#eee;" onclick='OnSortDesc()'>Sort descending</div>
+</div>
+
+<div class="ControlPanel">
+<div class="Btn" style="background-color:#beb;" onclick='OnTimerStart()'>Timer start</div>
+<div class="Btn" style="background-color:#bbe;" onclick='OnTimerPause()'>Timer pause</div>
+<div class="Btn" style="background-color:#ebb;" onclick='OnTimerStop()'>TimerStop</div>
+</div>
+
+</div>
+
+</body>
+</html>

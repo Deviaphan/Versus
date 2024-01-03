@@ -52,7 +52,7 @@ PlayerListItem::PlayerListItem( Dlg_EditPlayers* parent )
 	}
 	);
 
-	connect( ui->btnTeams, &QPushButton::clicked, this, &PlayerListItem::OnEditTeam );
+	connect( ui->favTeams, &QPushButton::clicked, this, &PlayerListItem::OnEditTeam );
 
 	connect( ui->btnDelete, &QPushButton::clicked, this, [this]{ emit _parent->OnDeleteItem( _item ); } );
 }

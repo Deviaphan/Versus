@@ -24,7 +24,7 @@ HotkeyItemWidget::~HotkeyItemWidget()
 
 void HotkeyItemWidget::SetTitle( int index )
 {
-	ui->label->setText( QString( "Player %1" ).arg( index + 1 ) );
+	ui->label->setText( QString( tr( "Player %1" ) ).arg( index + 1 ) );
 }
 
 QKeySequence HotkeyItemWidget::GetInc() const

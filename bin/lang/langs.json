@@ -1,0 +1,14 @@
+﻿{
+	"langs":[
+		{
+			"title":"English / en-US",
+			"qm":"lang_en_US.qm",
+			"png":"lang_en_US.png"		
+		},
+		{
+			"title":"Русский / ru-RU",
+			"qm":"lang_ru_RU.qm",
+			"png":"lang_ru_RU.png"		
+		}
+	]
+}

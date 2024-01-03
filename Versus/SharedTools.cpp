@@ -11,6 +11,16 @@
 
 const QString g_defaultLogo( "versus_logo/.default/grey.jpg" );
 
+QString GetSettingsFile()
+{
+	return QCoreApplication::applicationDirPath() + "/settings.json";
+}
+
+QString GetLanguageFile()
+{
+	return QCoreApplication::applicationDirPath() + "/lang/langs.json";
+}
+
 void ReadStringArray( const QString& fileName, std::set<QString>& items )
 {
 	QFile inFile( fileName );
@@ -97,7 +107,7 @@ QString GetLogoPath( const QString& logoPath )
 {
 	static const QString baseDir = QCoreApplication::applicationDirPath();
 
-	QString logoFile = baseDir + "/" + logoPath;
+	const QString logoFile = baseDir + "/" + logoPath;
 
 	const QFileInfo fileInfo( logoFile );
 	if( !fileInfo.exists() || !fileInfo.isFile() )
@@ -137,6 +147,43 @@ void ChangeBgColor( QWidget* widget, const QString& color )
 	widget->setPalette( palette );
 }
 
+void LoadLanguages( ::std::set<LangData>& langs )
+{
+	QFile inFile( GetLanguageFile() );
+	inFile.open( QIODevice::ReadOnly | QIODevice::Text );
+	const QByteArray byteData = inFile.readAll();
+	inFile.close();
+
+	QJsonParseError errorPtr;
+	const QJsonDocument doc = QJsonDocument::fromJson( byteData, &errorPtr );
+	if( doc.isNull() )
+		return;
+
+	QJsonObject rootObj = doc.object();
+
+	if( !rootObj["langs"].isArray() )
+		return;
+
+	QJsonArray itemArray = rootObj["langs"].toArray();
+
+	for( const QJsonValueRef val : itemArray )
+	{
+		if( val.isObject() )
+		{
+			auto obj = val.toObject();
+
+			LangData data;
+			data.langTitle = obj["title"].toString();
+			data.langFile = obj["qm"].toString();
+
+			const QString pngFile = QCoreApplication::applicationDirPath() + "/lang/" + obj["png"].toString();
+			data.icon = QIcon( pngFile );
+
+			langs.insert( data );
+		}
+	}
+}
+
 void SaveTournamentList( QJsonObject& root, QComboBox* itemList )
 {
 	try
@@ -146,7 +193,7 @@ void SaveTournamentList( QJsonObject& root, QComboBox* itemList )
 		const int count = itemList->count();
 		for( int idx = 0; idx < count; ++idx )
 		{
-			QString text = itemList->itemText( idx );
+			const QString text = itemList->itemText( idx );
 			itemArray.append( text );
 		}
 
@@ -157,29 +204,42 @@ void SaveTournamentList( QJsonObject& root, QComboBox* itemList )
 	}
 }
 
-void LoadTournamentList( QJsonObject* root, QComboBox* itemList )
+void LoadTournamentList( QComboBox* itemList )
 {
 	try
 	{
 		QSignalBlocker blocker( itemList );
 
-		QJsonArray itemArray;
-		if( root && (*root)["tournaments"].isArray() )
-		{
-			itemArray = (*root)["tournaments"].toArray();
-		}
+		QFile inFile( GetSettingsFile() );
+		inFile.open( QIODevice::ReadOnly | QIODevice::Text );
+		const QByteArray byteData = inFile.readAll();
+		inFile.close();
 
-		if( !itemArray.empty() )
+		QJsonParseError errorPtr;
+		const QJsonDocument doc = QJsonDocument::fromJson( byteData, &errorPtr );
+		if( !doc.isNull() )
 		{
-			for( const QJsonValueRef val : itemArray )
+			QJsonObject rootObj = doc.object();
+
+			QJsonArray itemArray;
+			if( rootObj["tournaments"].isArray() )
 			{
-				if( val.isString() )
+				itemArray = rootObj["tournaments"].toArray();
+			}
+
+			if( !itemArray.empty() )
+			{
+				for( const QJsonValueRef val : itemArray )
 				{
-					itemList->addItem( val.toString() );
+					if( val.isString() )
+					{
+						itemList->addItem( val.toString() );
+					}
 				}
 			}
 		}
-		else
+
+		if( itemList->count() == 0 )
 		{
 			itemList->addItem( "Versus Ⓡevolution" );
 			itemList->setCurrentText( "Versus Ⓡevolution" );
@@ -191,21 +251,21 @@ void LoadTournamentList( QJsonObject* root, QComboBox* itemList )
 	}
 }
 
-void SaveGroupList( QComboBox* itemList )
+void SaveListSubtitle1( QComboBox* itemList )
 {
 	try
 	{
 		std::set<QString> items;
-		const QString groupPath = QCoreApplication::applicationDirPath() + "/group.json";
+		const QString groupPath = QCoreApplication::applicationDirPath() + "/subtitle1.json";
 		ReadStringArray( groupPath, items );
 
-		const QString groupPathUser = QCoreApplication::applicationDirPath() + "/group-user.json";
+		const QString groupPathUser = QCoreApplication::applicationDirPath() + "/subtitle1-user.json";
 
 		std::set<QString> userItems;
 		const int count = itemList->count();
 		for( int idx = 0; idx < count; ++idx )
 		{
-			QString text = itemList->itemText( idx );
+			const QString text = itemList->itemText( idx );
 			if( items.find( text ) == items.end() )
 			{
 				userItems.insert( text );
@@ -219,15 +279,15 @@ void SaveGroupList( QComboBox* itemList )
 	}
 }
 
-void LoadGroupList( QComboBox* itemList )
+void LoadListSubtitle1( QComboBox* itemList )
 {
 	try
 	{
 		QSignalBlocker blocker( itemList );
 
 		std::set<QString> items;
-		const QString groupPath = QCoreApplication::applicationDirPath() + "/group.json";
-		const QString groupPathUser = QCoreApplication::applicationDirPath() + "/group-user.json";
+		const QString groupPath = QCoreApplication::applicationDirPath() + "/subtitle1.json";
+		const QString groupPathUser = QCoreApplication::applicationDirPath() + "/subtitle1-user.json";
 		ReadStringArray( groupPath, items );
 		ReadStringArray( groupPathUser, items );
 		if( !items.empty() )
@@ -245,21 +305,21 @@ void LoadGroupList( QComboBox* itemList )
 	}
 }
 
-void SaveBestOfList( QComboBox* itemList )
+void SaveListSubtitle2( QComboBox* itemList )
 {
 	try
 	{
 		std::set<QString> items;
-		const QString boPath = QCoreApplication::applicationDirPath() + "/bestof.json";
+		const QString boPath = QCoreApplication::applicationDirPath() + "/subtitle2.json";
 		ReadStringArray( boPath, items );
 
-		const QString boPathUser = QCoreApplication::applicationDirPath() + "/bestof-user.json";
+		const QString boPathUser = QCoreApplication::applicationDirPath() + "/subtitle2-user.json";
 
 		std::set<QString> userItems;
 		const int count = itemList->count();
 		for( int idx = 0; idx < count; ++idx )
 		{
-			QString text = itemList->itemText( idx );
+			const QString text = itemList->itemText( idx );
 			if( items.find( text ) == items.end() )
 			{
 				userItems.insert( text );
@@ -275,15 +335,15 @@ void SaveBestOfList( QComboBox* itemList )
 
 
 
-void LoadBestOfList( QComboBox* itemList )
+void LoadListSubtitle2( QComboBox* itemList )
 {
 	try
 	{
 		QSignalBlocker blocker( itemList );
 
 		std::set<QString> items;
-		const QString boPath = QCoreApplication::applicationDirPath() + "/bestof.json";
-		const QString boPathUser = QCoreApplication::applicationDirPath() + "/bestof-user.json";
+		const QString boPath = QCoreApplication::applicationDirPath() + "/subtitle2.json";
+		const QString boPathUser = QCoreApplication::applicationDirPath() + "/subtitle2-user.json";
 		ReadStringArray( boPath, items );
 		ReadStringArray( boPathUser, items );
 		if( !items.empty() )

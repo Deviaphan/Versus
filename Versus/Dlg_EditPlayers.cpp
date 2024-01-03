@@ -35,7 +35,7 @@ Dlg_EditPlayers::Dlg_EditPlayers( QWidget* parent, Versus* versus )
 		connect( ui->logoTeam, &QPushButton::clicked, this, &Dlg_EditPlayers::OnEditTeamlogo );
 
 		connect( ui->teamName, &QLineEdit::textChanged, this, [this]( const QString& s ){ this->PerhapsUpdateTeamLogo( s ); } );
-		connect( ui->btnTeams, &QPushButton::clicked, this, &Dlg_EditPlayers::OnEditTeam );
+		connect( ui->favTeams, &QPushButton::clicked, this, &Dlg_EditPlayers::OnEditTeam );
 
 		connect( ui->btnAddPlayer, &QPushButton::clicked, this, &Dlg_EditPlayers::OnAddNewPlayer );
 

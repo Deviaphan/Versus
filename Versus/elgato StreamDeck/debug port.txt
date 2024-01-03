@@ -2,3 +2,5 @@ http://localhost:23654/
 
 
 https://developer.elgato.com/documentation/stream-deck/sdk/property-inspector/
+
+https://docs.elgato.com/sdk/plugins/changelog

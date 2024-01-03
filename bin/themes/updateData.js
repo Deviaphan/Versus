@@ -87,6 +87,12 @@ function ParseData(event)
 function UpdateData()
 {
 	ws = new WebSocket( "ws://%LOCALHOST%:%PORT%" );
+	
+	ws.addEventListener("error", (event) => {
+	  console.log("WebSocket error: ", event);
+	});
+	
+	
 	ws.onopen = function(){ ws.send('{"updateMe":"1"}'); };
 
 	ws.onmessage = ParseData;

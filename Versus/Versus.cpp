@@ -21,6 +21,8 @@
 #include "Themes/Dlg_SelectTheme.h"
 #include "Themes/LogoManager.h"
 
+#include <QTranslator>
+
 
 void SendToSocket( QList<QWebSocket*>& webSockets, const QString& json )
 {
@@ -50,82 +52,15 @@ Versus::Versus( QWidget* parent )
 	, _webServerPort( 9090 )
 	, _tcpSocketPort( 9091 )
 	, _autoStart( false )
-	, _timerGroupIndex( 0 )
 	, _timerId( 0 )
 	, _totalTime( 0 )
 	, _currentTime( 0 )
 	, _timerState( TimerEvents::Stop )
+	, _usedTimerIndex( 0 )
 	, _stickyEdges( true )
+	, _lastSub1( "-/-" )
+	, _lastSub2( "-/-" )
 {
-	ui.setupUi( this );
-
-	{
-		connect( ui.btnSettings, &QPushButton::clicked, this, &Versus::OnEditSettings );
-		connect( ui.btnScoreServer, &QPushButton::clicked, this, &Versus::OnStartStopServer );
-		connect( &_socketServer, &QWebSocketServer::newConnection, this, [this]{ this->AddSockets(); } );
-
-		connect( ui.btnUpdate, &QPushButton::clicked, this, &Versus::OnSendScoreboardData );
-	}
-
-	{
-		connect( ui.btnSelectTheme, &QPushButton::clicked, this, &Versus::OnSelectTheme );
-
-		connect( ui.styleIndex, &QComboBox::currentIndexChanged, this, [this]
-		{
-			VS_TRY;
-		const int idx = ui.styleIndex->currentIndex();
-		if( idx >= 0 )
-		{
-			this->_themeInfo.currentStyle = idx;
-			for( int i = 0; i < (int)_currentSet.size(); ++i )
-			{
-				_currentSet.at( i ).scoreColor = _themeInfo.styles[idx].colors.at( i );
-				_currentSet.at( i ).UpdateItem();
-			}
-
-			OnSendScoreboardData();
-		}
-		VS_CATCH;
-		} );
-	}
-
-	{
-		_timerGroupIndex = ui.tabTimers->currentIndex();
-
-		ui.timeCountdown->setTime( QTime( 0, 0, 30 ) );
-		ui.timeStopwatch->setTime( QTime( 0, 0, 30 ) );
-
-		ui.btnTimerStart->setDisabled( true );
-		ui.btnTimerPause->setDisabled( true );
-		ui.btnTimerStop->setDisabled( true );
-
-		connect( ui.btnTimerStart, &QPushButton::clicked, this, &Versus::OnTimerStart );
-		connect( ui.btnTimerPause, &QPushButton::clicked, this, &Versus::OnTimerPause );
-		connect( ui.btnTimerStop, &QPushButton::clicked, this, &Versus::OnTimerStop );
-	}
-
-	{
-		connect( ui.btnEditTournament, &QPushButton::clicked, this, &Versus::OnEditTournamentTitle );
-		connect( ui.btnEditStage, &QPushButton::clicked, this, &Versus::OnEditStage );
-		connect( ui.btnEditBestOf, &QPushButton::clicked, this, &Versus::OnEditBestOf );
-
-		connect( ui.tournamentTitle, QOverload<int>::of( &QComboBox::currentIndexChanged ), this, [this]( int index ){ui.tournamentTitle->setCurrentIndex( index ); } );
-		connect( ui.bestOf, QOverload<int>::of( &QComboBox::currentIndexChanged ), this, [this]( int index ){ui.bestOf->setCurrentIndex( index ); } );
-		connect( ui.stageTitle, QOverload<int>::of( &QComboBox::currentIndexChanged ), this, [this]( int index ){ui.stageTitle->setCurrentIndex( index ); } );
-	}
-
-	{
-		connect( ui.btnHotkeys, &QPushButton::clicked, this, &Versus::OnEditHotkey );
-
-		connect( ui.pushPlayerGroup, &QPushButton::clicked, this, &Versus::OnSetPlayerGroup );
-
-		connect( ui.pushSortSwap, &QPushButton::clicked, this, &Versus::OnSortSwap );
-		connect( ui.pushSortUp, &QPushButton::clicked, this, &Versus::OnSortUp );
-		connect( ui.pushSortDown, &QPushButton::clicked, this, &Versus::OnSortDown );
-		connect( ui.pushReset, &QPushButton::clicked, this, &Versus::OnResetScores );
-	}
-
-	//qApp->installEventFilter( this );
 }
 
 Versus::~Versus()
@@ -137,6 +72,87 @@ Versus::~Versus()
 	SaveSettings();
 
 	VS_CATCH;
+}
+
+void Versus::InitUI()
+{
+	ui.setupUi( this );
+
+	{
+		connect( ui.btnSettings, &QPushButton::clicked, this, &Versus::OnEditSettings );
+		connect( ui.btnScoreServer, &QPushButton::clicked, this, &Versus::OnStartStopServer );
+		connect( &_socketServer, &QWebSocketServer::newConnection, this, &Versus::AddSockets );
+		connect( ui.btnServerClipboard, &QPushButton::clicked, this, &Versus::OnCopyServerToClipboard );
+		connect( ui.btnUpdate, &QPushButton::clicked, this, &Versus::OnSendScoreboardData );
+	}
+
+	{
+		connect( ui.btnSelectTheme, &QPushButton::clicked, this, &Versus::OnSelectTheme );
+
+		connect( ui.styleIndex, &QComboBox::currentIndexChanged, this, [this]
+		{
+			VS_TRY;
+			const int idx = ui.styleIndex->currentIndex();
+			if( idx >= 0 )
+			{
+				this->_themeInfo.currentStyle = idx;
+				for( int i = 0; i < (int)_currentSet.size(); ++i )
+				{
+					_currentSet.at( i ).scoreColor = _themeInfo.styles[idx].colors.at( i );
+					_currentSet.at( i ).UpdateItem();
+				}
+
+				OnSendScoreboardData();
+			}
+			VS_CATCH;
+		} );
+	}
+
+	{
+		ui.initCountdownTime->setTime( QTime( 0, 0, 30 ) );
+		ui.initStopwatchTime->setTime( QTime( 0, 0, 30 ) );
+
+		ui.btnTimerStart->setDisabled( true );
+		ui.btnTimerPause->setDisabled( true );
+		ui.btnTimerStop->setDisabled( true );
+
+		connect( ui.radio_countdown, &QRadioButton::clicked, this, [this]()	{
+			_usedTimerIndex = 0;
+		} );
+		connect( ui.radio_stopwatch, &QRadioButton::clicked, this, [this]()	{
+			_usedTimerIndex = 1;
+		} );
+		connect( ui.radio_systemclock, &QRadioButton::clicked, this, [this](){
+			_usedTimerIndex = 2;
+		} );
+
+		connect( ui.btnTimerStart, &QPushButton::clicked, this, &Versus::OnTimerStart );
+		connect( ui.btnTimerPause, &QPushButton::clicked, this, &Versus::OnTimerPause );
+		connect( ui.btnTimerStop, &QPushButton::clicked, this, &Versus::OnTimerStop );
+	}
+
+	{
+		connect( ui.favTournament, &QPushButton::clicked, this, &Versus::OnEditTournamentTitle );
+		connect( ui.favStage, &QPushButton::clicked, this, &Versus::OnEditStage );
+		connect( ui.favBestOf, &QPushButton::clicked, this, &Versus::OnEditBestOf );
+
+		connect( ui.title, QOverload<int>::of( &QComboBox::currentIndexChanged ), this, [this]( int index ){ui.title->setCurrentIndex( index ); } );
+		connect( ui.titleSub2, QOverload<int>::of( &QComboBox::currentIndexChanged ), this, [this]( int index ){ui.titleSub2->setCurrentIndex( index ); } );
+		connect( ui.titleSub1, QOverload<int>::of( &QComboBox::currentIndexChanged ), this, [this]( int index ){ui.titleSub1->setCurrentIndex( index ); } );
+	}
+
+	{
+		connect( ui.btnHotkeys, &QPushButton::clicked, this, &Versus::OnEditHotkey );
+
+		connect( ui.toolbarPlayerGroup, &QPushButton::clicked, this, &Versus::OnSetPlayerGroup );
+
+		connect( ui.toolbarSortSwap, &QPushButton::clicked, this, &Versus::OnSortSwap );
+		connect( ui.toolbarSortUp, &QPushButton::clicked, this, &Versus::OnSortUp );
+		connect( ui.toolbarSortDown, &QPushButton::clicked, this, &Versus::OnSortDown );
+		connect( ui.toolbarReset, &QPushButton::clicked, this, &Versus::OnResetScores );
+	}
+
+	connect( &_downloader, &Downloader::onReady, this, &Versus::CheckVersion );
 }
 
 void Versus::Init()
@@ -163,23 +179,72 @@ void Versus::Init()
 			palette.setBrush( QPalette::Window, bkgnd );
 			this->setPalette( palette );
 		}
+	}
 
-		LoadBestOfList( ui.bestOf );
-		LoadGroupList( ui.stageTitle );
+	LoadSettings();
+	LoadLanguages( _langs );
 
-		connect( &_downloader, &Downloader::onReady, this, &Versus::CheckVersion );
+	if( !_selectedLanguage.isEmpty() )
+	{
+		auto ii = _langs.find( LangData(_selectedLanguage) );
+		if( ii != _langs.end() )
+		{
+			const QString file = QCoreApplication::applicationDirPath() + "/lang";
+			if( _translator.load( ii->langFile, file ) )
+			{
+				QApplication::installTranslator( &_translator );
+			}
+		}
+	}
 
+	InitUI();
+
+	{
 		const QUrl updateUrl( "http://maagames.ru/files/versus/version.json" );
 		_downloader.GetData( updateUrl );
+	}	
+
+	for( const auto& lang : _langs )
+	{
+		ui.comboLanguage->addItem( lang.icon, lang.langTitle );
 	}
+	if( _selectedLanguage.isEmpty() )
+	{
+		_selectedLanguage = "English / en-US";
+	}
+	ui.comboLanguage->setCurrentText( _selectedLanguage );
+
+	LoadTournamentList( ui.title );
+
+	LoadListSubtitle1( ui.titleSub1 );
+	LoadListSubtitle2( ui.titleSub2 );
 
 	ui.btnScoreServer->setIconSize( QSize( 48, 48 ) );
 	ui.btnScoreServer->setIcon( QIcon( QPixmap( ":/Versus/start.png" ) ) );
 
 	ui.btnUpdate->setIconSize( QSize( 48, 48 ) );
 	ui.btnUpdate->setIcon( QIcon( QPixmap( ":/Versus/update-data.png" ) ) );
+	
+	ui.serverAddress->setText( QString( "%1:%2" ).arg( _localIP ).arg( _webServerPort ) );
+	ui.title->setCurrentText( _lastTitle );
+	ui.titleSub1->setCurrentText( _lastSub1 );
+	ui.titleSub2->setCurrentText( _lastSub2 );
 
-	LoadSettings();
+	ui.initCountdownTime->setTime( QTime::fromString( _countdown, "HH:mm:ss" ) );
+	ui.initStopwatchTime->setTime( QTime::fromString( _stopwatch, "HH:mm:ss" ) );
+	switch( _usedTimerIndex )
+	{
+		case 0:
+			ui.radio_countdown->setChecked( true );
+			break;
+		case 1:
+			ui.radio_stopwatch->setChecked( true );
+			break;
+		default:
+			ui.radio_systemclock->setChecked( true );
+			// system time
+			break;
+	}
 
 	if( _themeInfo.title.isEmpty() )
 	{
@@ -194,13 +259,8 @@ void Versus::Init()
 	{
 		emit OnStartStopServer();
 	}
-
+	
 	VS_CATCH;
-}
-
-QString Versus::GetSettingsFile() const
-{
-	return QCoreApplication::applicationDirPath() + "/settings.json";
 }
 
 void Versus::EditScore( int id, double step )
@@ -253,8 +313,6 @@ void Versus::LoadSettings()
 	const QJsonDocument doc = QJsonDocument::fromJson( byteData, &errorPtr );
 	if( doc.isNull() )
 	{
-		LoadTournamentList( nullptr, ui.tournamentTitle );
-
 		return;
 	}
 
@@ -292,12 +350,12 @@ void Versus::LoadSettings()
 	{
 		_stickyEdges = stickyEdges.toInt() != 0;
 	}
-	
-	LoadTournamentList( &rootObj, ui.tournamentTitle );
 
-	ui.tournamentTitle->setCurrentText( ReadJsonValue( rootObj, "lastTitle", ui.tournamentTitle->currentText() ) );
-	ui.stageTitle->setCurrentText( ReadJsonValue( rootObj, "lastGroup", ui.stageTitle->currentText() ) );
-	ui.bestOf->setCurrentText( ReadJsonValue( rootObj, "lastBo3", ui.bestOf->currentText() ) );
+	_selectedLanguage = ReadJsonValue( rootObj, "selectedLanguage", _selectedLanguage );
+
+	_lastTitle = ReadJsonValue( rootObj, "lastTitle", _lastTitle );
+	_lastSub1 = ReadJsonValue( rootObj, "lastSub1", _lastSub1 );
+	_lastSub2 = ReadJsonValue( rootObj, "lastSub2", _lastSub2 );
 
 	LogoManager::lastPlayerLogoPack = ReadJsonValue( rootObj, "playerLogoPack", LogoManager::lastPlayerLogoPack );
 	LogoManager::lastTeamLogoPack = ReadJsonValue( rootObj, "teamLogoPack", LogoManager::lastTeamLogoPack );
@@ -328,16 +386,9 @@ void Versus::LoadSettings()
 		_themeInfo.currentStyle = (std::min)(themeStyleIndex, _themeInfo.numStyles - 1);
 	}
 
-	{
-		const QString curTab = ReadJsonValue( rootObj, "timerIndex", "2" );
-		ui.tabTimers->setCurrentIndex( curTab.toInt() );
-
-		const QString countdown = ReadJsonValue( rootObj, "timerCountdown", "00:00:30" );
-		ui.timeCountdown->setTime( QTime::fromString( countdown, "HH:mm:ss" ) );
-
-		const QString stopwatch = ReadJsonValue( rootObj, "timerStopwatch", "00:00:30" );
-		ui.timeStopwatch->setTime( QTime::fromString( stopwatch, "HH:mm:ss" ) );
-	}
+	_usedTimerIndex = ReadJsonValue( rootObj, "timerIndex", "2" ).toInt();
+	_countdown = ReadJsonValue( rootObj, "timerCountdown", "00:00:30" );
+	_stopwatch = ReadJsonValue( rootObj, "timerStopwatch", "00:00:30" );
 
 	// загрузка группы игроков
 	{
@@ -410,24 +461,25 @@ void Versus::SaveSettings()
 	rootObj.insert( "autoStart", QString::number( (int)_autoStart ) );
 	rootObj.insert( "stickyEdges", QString::number( (int)_stickyEdges ) );
 
-	SaveTournamentList( rootObj, ui.tournamentTitle );
-	rootObj.insert( "lastTitle", ui.tournamentTitle->currentText() );
-	rootObj.insert( "lastGroup", ui.stageTitle->currentText() );
-	rootObj.insert( "lastBo3", ui.bestOf->currentText() );
+	rootObj.insert( "selectedLanguage", ui.comboLanguage->currentText() );
+
+	SaveTournamentList( rootObj, ui.title );
+	rootObj.insert( "lastTitle", ui.title->currentText() );
+	rootObj.insert( "lastSub1", ui.titleSub1->currentText() );
+	rootObj.insert( "lastSub2", ui.titleSub2->currentText() );
 
 	rootObj.insert( "playerLogoPack", LogoManager::lastPlayerLogoPack );
 	rootObj.insert( "teamLogoPack", LogoManager::lastTeamLogoPack );
 
 	// таймеры
 	{
-		const int curTab = ui.tabTimers->currentIndex();
-		rootObj.insert( "timerIndex", QString::number( curTab ) );
+		rootObj.insert( "timerIndex", _usedTimerIndex );
 
-		const QString countdown = ui.timeCountdown->time().toString( "HH:mm:ss" );
-		rootObj.insert( "timerCountdown", countdown );
+		_countdown = ui.initCountdownTime->time().toString( "HH:mm:ss" );
+		_stopwatch = ui.initStopwatchTime->time().toString( "HH:mm:ss" );
 
-		const QString stopwatch = ui.timeStopwatch->time().toString( "HH:mm:ss" );
-		rootObj.insert( "timerStopwatch", stopwatch );
+		rootObj.insert( "timerCountdown", _countdown );
+		rootObj.insert( "timerStopwatch", _stopwatch );
 	}
 
 	// сохранение группы игроков
@@ -476,8 +528,8 @@ void Versus::SaveSettings()
 
 	PlayerManager::Instance().SaveDB();
 
-	SaveGroupList( ui.stageTitle );
-	SaveBestOfList( ui.bestOf );
+	SaveListSubtitle1( ui.titleSub1 );
+	SaveListSubtitle2( ui.titleSub2 );
 
 	VS_CATCH;
 }
@@ -500,7 +552,7 @@ void Versus::LoadTheme()
 {
 	VS_TRY;
 
-	ui.themeName->setText( _themeInfo.title );
+	ui.btnSelectTheme->setText( _themeInfo.title );
 	ui.widgetSize->setText( _themeInfo.sourceSize );
 
 	QSignalBlocker block( ui.styleIndex );
@@ -563,7 +615,7 @@ void Versus::UpdatePlayerSet()
 	int index = 1;
 	for( auto& itemData : _currentSet )
 	{
-		itemData.itemTitle = QString( "Player %1" ).arg( index );
+		itemData.itemTitle = QString( tr("Player %1") ).arg( index );
 		++index;
 
 		itemData.widget = new PlayerItemWidget( this );
@@ -594,9 +646,9 @@ void Versus::OnSendScoreboardData()
 
 	Add( byteData, "themeStyleIndex", QString::number( _themeInfo.currentStyle ) );
 
-	Add( byteData, "title", ui.tournamentTitle->currentText() );
-	Add( byteData, "group", ui.stageTitle->currentText() );
-	Add( byteData, "bo3", ui.bestOf->currentText() );
+	Add( byteData, "title", ui.title->currentText() );
+	Add( byteData, "sub1", ui.titleSub1->currentText() );
+	Add( byteData, "sub2", ui.titleSub2->currentText() );
 
 	for( int i = 0; i < (int)_currentSet.size(); ++i )
 	{
@@ -905,7 +957,7 @@ void Versus::StartServer()
 	_socketServer.listen( QHostAddress::Any /*"ws://localhost"*/, (quint16)tcpPort );
 
 	ui.btnScoreServer->setIcon( QIcon( QPixmap( ":/Versus/stop.png" ) ) );
-	ui.btnScoreServer->setText( "Stop server" );
+	ui.btnScoreServer->setText( tr("Stop server") );
 
 	emit OnSendScoreboardData();
 
@@ -940,7 +992,7 @@ void Versus::StopServer()
 	_socketServer.close();
 
 	ui.btnScoreServer->setIcon( QIcon( QPixmap( ":/Versus/start.png" ) ) );
-	ui.btnScoreServer->setText( "Start server" );
+	ui.btnScoreServer->setText( tr("Start server") );
 
 	ui.btnTimerStart->setDisabled( true );
 	ui.btnTimerPause->setDisabled( true );
@@ -955,25 +1007,25 @@ void Versus::OnEditTournamentTitle()
 
 	Dlg_EditList dlg( this );
 
-	for( int i = 0; i < ui.tournamentTitle->count(); ++i )
+	for( int i = 0; i < ui.title->count(); ++i )
 	{
-		dlg.items.emplace_back( ui.tournamentTitle->itemText( i ) );
+		dlg.items.emplace_back( ui.title->itemText( i ) );
 	}
 
 	dlg.UpdateList();
 
 	dlg.exec();
 
-	QSignalBlocker blocker( ui.tournamentTitle );
+	QSignalBlocker blocker( ui.title );
 
-	ui.tournamentTitle->clear();
+	ui.title->clear();
 
 	for( const auto& item : dlg.items )
 	{
-		ui.tournamentTitle->addItem( item );
+		ui.title->addItem( item );
 	}
 
-	ui.tournamentTitle->setCurrentIndex( dlg.GetSelectedIndex() );
+	ui.title->setCurrentIndex( dlg.GetSelectedIndex() );
 
 	VS_CATCH;
 }
@@ -984,25 +1036,25 @@ void Versus::OnEditStage()
 
 	Dlg_EditList dlg( this );
 
-	for( int i = 0; i < ui.stageTitle->count(); ++i )
+	for( int i = 0; i < ui.titleSub1->count(); ++i )
 	{
-		dlg.items.emplace_back( ui.stageTitle->itemText( i ) );
+		dlg.items.emplace_back( ui.titleSub1->itemText( i ) );
 	}
 
 	dlg.UpdateList();
 
 	dlg.exec();
 
-	QSignalBlocker blocker( ui.stageTitle );
+	QSignalBlocker blocker( ui.titleSub1 );
 
-	ui.stageTitle->clear();
+	ui.titleSub1->clear();
 
 	for( const auto& item : dlg.items )
 	{
-		ui.stageTitle->addItem( item );
+		ui.titleSub1->addItem( item );
 	}
 
-	ui.stageTitle->setCurrentIndex( dlg.GetSelectedIndex() );
+	ui.titleSub1->setCurrentIndex( dlg.GetSelectedIndex() );
 
 	VS_CATCH;
 }
@@ -1013,25 +1065,25 @@ void Versus::OnEditBestOf()
 
 	Dlg_EditList dlg( this );
 
-	for( int i = 0; i < ui.bestOf->count(); ++i )
+	for( int i = 0; i < ui.titleSub2->count(); ++i )
 	{
-		dlg.items.emplace_back( ui.bestOf->itemText( i ) );
+		dlg.items.emplace_back( ui.titleSub2->itemText( i ) );
 	}
 
 	dlg.UpdateList();
 
 	dlg.exec();
 
-	QSignalBlocker blocker( ui.bestOf );
+	QSignalBlocker blocker( ui.titleSub2 );
 
-	ui.bestOf->clear();
+	ui.titleSub2->clear();
 
 	for( const auto& item : dlg.items )
 	{
-		ui.bestOf->addItem( item );
+		ui.titleSub2->addItem( item );
 	}
 
-	ui.bestOf->setCurrentIndex( dlg.GetSelectedIndex() );
+	ui.titleSub2->setCurrentIndex( dlg.GetSelectedIndex() );
 
 	VS_CATCH;
 }
@@ -1268,6 +1320,8 @@ void Versus::OnEditSettings()
 	_tcpSocketPort = dlg.GetTcpSocketPort();
 	_autoStart = dlg.GetAutoStart();
 
+	ui.serverAddress->setText( QString( "%1:%2" ).arg( _localIP ).arg( _webServerPort ) );
+
 	VS_CATCH;
 }
 
@@ -1432,6 +1486,12 @@ void Versus::timerEvent( QTimerEvent* event )
 	if( event->timerId() == _timerId )
 	{
 		OnSendTimerData();
+
+		const int tH = _currentTime / (60 * 60);
+		const int tM = (_currentTime / 60) % 60;
+		const int tS = _currentTime % 60;
+
+		ui.currentTime->setTime( QTime( tH, tM, tS ) );
 	}
 }
 
@@ -1461,7 +1521,7 @@ void Versus::OnSendTimerData()
 	if( !_server )
 		return;
 
-	switch( _timerGroupIndex )
+	switch( _usedTimerIndex )
 	{
 		case 0: // countdown
 		{
@@ -1548,30 +1608,32 @@ void Versus::OnTimerStart()
 
 	if( _timerId == 0 )
 	{
-		_timerGroupIndex = ui.tabTimers->currentIndex();
-
 		_timerId = startTimer( std::chrono::seconds( 1 ), Qt::VeryCoarseTimer );
 
-		switch( _timerGroupIndex )
+		switch( _usedTimerIndex )
 		{
 			case 0: // countdown
 			{
 				if( _timerState != TimerEvents::Pause )
 				{
-					const QTime time = ui.timeCountdown->time();
+					const QTime time = ui.initCountdownTime->time();
 					_totalTime = time.hour() * 3600 + time.minute() * 60 + time.second();
 					_currentTime = _totalTime;
 				}
+				ui.radio_stopwatch->setEnabled( false );
+				ui.radio_systemclock->setEnabled( false );
 				break;
 			}
 			case 1: // stopwatch
 			{
 				if( _timerState != TimerEvents::Pause )
 				{
-					const QTime time = ui.timeStopwatch->time();
+					const QTime time = ui.initStopwatchTime->time();
 					_totalTime = time.hour() * 3600 + time.minute() * 60 + time.second();
 					_currentTime = 0;
 				}
+				ui.radio_countdown->setEnabled( false );
+				ui.radio_systemclock->setEnabled( false );
 				break;
 			}
 			case 2: // system clock
@@ -1582,6 +1644,8 @@ void Versus::OnTimerStart()
 				const QTime time = current.time();
 				_currentTime = time.hour() * 60 * 60 + time.minute() * 60 + time.second();
 
+				ui.radio_countdown->setEnabled( false );
+				ui.radio_stopwatch->setEnabled( false );
 				break;
 			}
 			default:
@@ -1596,10 +1660,17 @@ void Versus::OnTimerStart()
 		}
 		else
 		{
-			SendTimerEvent( TimerEvents::Start, _totalTime );
+			SendTimerEvent( TimerEvents::Start, _currentTime );
 		}
 
 		_timerState = TimerEvents::Start;
+
+		{
+			const int tH = _currentTime / (60 * 60);
+			const int tM = (_currentTime / 60) % 60;
+			const int tS = _currentTime % 60;
+			ui.currentTime->setTime( QTime( tH, tM, tS ) );
+		}
 
 		SendCurrentTime( _webSockets, _currentTime );
 	}
@@ -1645,7 +1716,7 @@ void Versus::OnTimerStop()
 
 	if( _timerState != TimerEvents::Expired )
 	{
-		switch( _timerGroupIndex )
+		switch( _usedTimerIndex )
 		{
 			case 0: // countdown
 			{
@@ -1658,9 +1729,6 @@ void Versus::OnTimerStop()
 				break;
 			}
 			case 2: // system clock
-			{
-				break;
-			}
 			default:
 			{
 				break;
@@ -1672,6 +1740,10 @@ void Versus::OnTimerStop()
 
 	SendCurrentTime( _webSockets, _currentTime );
 	SendTimerEvent( TimerEvents::Stop, -1 );
+
+	ui.radio_countdown->setEnabled( true );
+	ui.radio_stopwatch->setEnabled( true );
+	ui.radio_systemclock->setEnabled( true );
 
 	ui.btnTimerStart->setDisabled( false );
 	ui.btnTimerPause->setDisabled( true );
@@ -1688,4 +1760,11 @@ double Versus::GetIncStep() const
 double Versus::GetDecStep() const
 {
 	return _decStep;
+}
+
+void Versus::OnCopyServerToClipboard()
+{
+	QClipboard* clipboard = QApplication::clipboard();
+
+	clipboard->setText( ui.serverAddress->text(), QClipboard::Clipboard );
 }

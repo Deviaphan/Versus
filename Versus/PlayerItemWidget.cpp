@@ -43,8 +43,8 @@ PlayerItemWidget::PlayerItemWidget( Versus* parent )
 	connect( ui->decScore, &QPushButton::clicked, this, [this]{	this->Dec();	} );
 	connect( ui->incScore, &QPushButton::clicked, this, [this]{	this->Inc();	} );
 
-	connect( ui->btnPlayers, &QPushButton::clicked, this, &PlayerItemWidget::OnEditPlayer );
-	connect( ui->btnTeams, &QPushButton::clicked, this, &PlayerItemWidget::OnEditTeam );
+	connect( ui->favPlayers, &QPushButton::clicked, this, &PlayerItemWidget::OnEditPlayer );
+	connect( ui->favTeams, &QPushButton::clicked, this, &PlayerItemWidget::OnEditTeam );
 
 }
 

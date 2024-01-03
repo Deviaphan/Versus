@@ -108,9 +108,9 @@
   <widget class="QPushButton" name="btnSortName">
    <property name="geometry">
     <rect>
-     <x>210</x>
+     <x>10</x>
      <y>90</y>
-     <width>121</width>
+     <width>191</width>
      <height>24</height>
     </rect>
    </property>
@@ -124,9 +124,9 @@
   <widget class="QPushButton" name="btnSortTeam">
    <property name="geometry">
     <rect>
-     <x>340</x>
+     <x>270</x>
      <y>90</y>
-     <width>121</width>
+     <width>191</width>
      <height>24</height>
     </rect>
    </property>
@@ -157,7 +157,7 @@ border:0px;</string>
     <string/>
    </property>
   </widget>
-  <widget class="QPushButton" name="btnTeams">
+  <widget class="QPushButton" name="favTeams">
    <property name="geometry">
     <rect>
      <x>310</x>
@@ -173,6 +173,7 @@ border:0px;</string>
     <string notr="true">QPushButton
 {
 image: url(:/Versus/expand.png);
+border: 0px;
 }</string>
    </property>
    <property name="text">
@@ -237,7 +238,7 @@ border:0px;</string>
   <tabstop>logoTeam</tabstop>
   <tabstop>playerName</tabstop>
   <tabstop>teamName</tabstop>
-  <tabstop>btnTeams</tabstop>
+  <tabstop>favTeams</tabstop>
   <tabstop>btnAddPlayer</tabstop>
   <tabstop>btnSortName</tabstop>
   <tabstop>btnSortTeam</tabstop>

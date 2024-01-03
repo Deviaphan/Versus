@@ -1,0 +1,102 @@
+﻿body
+{
+	padding: 0;
+	margin: 0px 0px;
+	overflow: hidden;	
+}
+
+#Scene_1
+{
+	display : none;
+}
+
+#RemoteControl
+
+{
+	display : none;
+}
+
+.panel
+{
+	width: 500px;
+	height: 70px;
+	background: url("panel.png") no-repeat;
+	overflow: hidden;
+}
+
+.photo
+{
+	float:left;
+	width: 59px;
+	height: 59px;
+}
+
+.name
+{
+	float:left;
+	padding-right: 20px;
+	text-align: right;
+	font-size: 36px;
+	line-height: 59px;
+	width: 340px;
+	height: 59px;
+	color: #333b;
+}
+.score
+{
+	float:left;
+	color: #fffd;
+	text-align: center;
+	font-size: 48px;
+	line-height: 59px;
+	width: 135px;
+}
+
+
+.ControlPanel
+{
+	width: 90%;
+	height: 5em;
+}
+
+.PlayerTitle
+{
+	width: 90%;
+	height: 30%;
+	text-align: center;
+	color:#fff;
+	text-shadow: 1px 1px 2px black, -1px -1px 2px black;
+}
+
+.BtnDec
+{
+	float:left;
+	width: 30%;
+	height: 70%;
+	background-color:#ecc;
+	text-align:center;
+}
+
+.Btn
+{
+	float:left;
+	width: 30%;
+	height: 70%;
+	background-color:#eee;
+	font-size: 3em;
+	text-align:center;
+}
+
+.BtnInc
+{
+	float:left;
+	width: 30%;
+	height: 70%;
+	background-color:#cec;
+	text-align:center;
+}
+
+.time_data
+{
+	font-size: 2em;
+}
